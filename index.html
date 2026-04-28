@@ -20,7 +20,16 @@
       </label>
       <button id="exportSvg" class="primary">⬇ SVG</button>
       <button id="exportDxf" title="DXF R14 для Fusion 360 / CAD — текст автоматично конвертується у криві">⬇ DXF</button>
-      <button id="exportPng">⬇ PNG</button>
+      <span class="png-group">
+        <button id="exportPng">⬇ PNG</button>
+        <select id="pngDpi" title="Розширення PNG (DPI)">
+          <option value="300">300 dpi</option>
+          <option value="600" selected>600 dpi</option>
+          <option value="1200">1200 dpi</option>
+          <option value="2400">2400 dpi</option>
+          <option value="4800">4800 dpi</option>
+        </select>
+      </span>
       <button id="copySvg">📋 SVG</button>
       <button id="exportJson" title="Зберегти налаштування печатки">💾 JSON</button>
       <button id="importJson" title="Завантажити збережені налаштування">📂 JSON</button>

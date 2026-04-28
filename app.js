@@ -1931,18 +1931,25 @@ async function exportPng() {
   const xml = new XMLSerializer().serializeToString(svg);
   const blob = new Blob([xml], { type: "image/svg+xml;charset=utf-8" });
   const url = URL.createObjectURL(blob);
+  const dpi = parseInt($("pngDpi")?.value || "600", 10);
+  // viewBox is in mm. 1 inch = 25.4 mm → pixelsPerMm = dpi / 25.4
+  const scale = dpi / 25.4;
   const img = new Image();
   img.onload = () => {
-    const scale = 12; // ~ 300 dpi
-    const vb = svg.getAttribute("viewBox").split(" ");
-    const w = parseFloat(vb[2]) * scale;
-    const h = parseFloat(vb[3]) * scale;
+    const vb = svg.getAttribute("viewBox").split(/\s+/);
+    const mmW = parseFloat(vb[2]);
+    const mmH = parseFloat(vb[3]);
+    const w = Math.round(mmW * scale);
+    const h = Math.round(mmH * scale);
     const canvas = document.createElement("canvas");
     canvas.width = w; canvas.height = h;
     const ctx = canvas.getContext("2d");
+    // White background — без нього прозорий PNG може погано показуватись у деяких програмах
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, w, h);
     ctx.drawImage(img, 0, 0, w, h);
     canvas.toBlob((b) => {
-      download(b, `stamp-${Date.now()}.png`);
+      download(b, `stamp-${dpi}dpi-${Date.now()}.png`);
       URL.revokeObjectURL(url);
     }, "image/png");
   };

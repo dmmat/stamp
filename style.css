@@ -90,6 +90,32 @@ header h1 { margin: 0; font-size: 16px; font-weight: 600; }
   font-size: 10px;
 }
 
+.png-group {
+  display: inline-flex;
+  align-items: stretch;
+  gap: 0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.png-group button {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+.png-group select {
+  width: auto;
+  border-radius: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin: 0;
+  padding: 0 6px;
+  font-size: 11px;
+  height: auto;
+  background: var(--panel-2);
+  cursor: pointer;
+}
+.png-group select:hover { background: #eef1f6; }
+
 /* ===== MAIN LAYOUT ===== */
 main {
   flex: 1 1 auto;
