@@ -17,6 +17,8 @@ const els = {
 
   centerLines: $("centerLines"),
   addLine: $("addLine"),
+  lineSpacing: $("lineSpacing"),
+  centerYOffset: $("centerYOffset"),
 
   showStars: $("showStars"), showTrident: $("showTrident"),
   separator: $("separator"),
@@ -887,17 +889,21 @@ function drawCenterContent(root, cx, cy, maxR) {
 function drawStackedLines(root, cx, cy) {
   const lines = getLines();
   if (!lines.length) return;
-  // Compute total height with line gaps proportional to size
-  const gap = 0.18;
-  let totalH = 0;
-  for (const l of lines) totalH += l.size * (1 + gap);
-  totalH -= lines[0].size * gap; // no trailing gap on last
+  // Line-spacing multiplier (relative to each line's font size). 1.18 ≈ default
+  // tight typography; 1.5 ≈ comfortable; 1.0 = baseline-on-baseline.
+  const lineMul = parseFloat(els.lineSpacing?.value || 1.18) || 1.18;
+  const yOffset = parseFloat(els.centerYOffset?.value || 0) || 0;
 
-  let y = cy - totalH / 2 + lines[0].size * 0.85;
+  let totalH = 0;
+  for (const l of lines) totalH += l.size * lineMul;
+  totalH -= lines[lines.length - 1].size * (lineMul - 1); // no trailing gap
+
+  const cyAdj = cy + yOffset;
+  let y = cyAdj - totalH / 2 + lines[0].size * 0.85;
   for (const l of lines) {
     drawCenteredText(root, applyCase(l.text), cx, y, l.size, "middle",
       l.weight || null, l.style, l.font || null);
-    y += l.size * (1 + gap);
+    y += l.size * lineMul;
   }
 }
 

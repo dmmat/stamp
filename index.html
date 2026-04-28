@@ -262,6 +262,14 @@
 
     <details open>
       <summary>📝 Центральний блок</summary>
+      <div class="grid-2">
+        <label>Висота рядка (×шрифт)
+          <input type="number" id="lineSpacing" value="1.18" step="0.02" min="0.9" max="2.5" />
+        </label>
+        <label>Зсув по Y (мм)
+          <input type="number" id="centerYOffset" value="0" step="0.2" min="-15" max="15" />
+        </label>
+      </div>
       <div id="centerLines"></div>
       <button id="addLine" class="full">+ Додати рядок</button>
     </details>
