@@ -63,61 +63,76 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 18px;
+  padding: 8px 16px;
   gap: 16px;
+  min-height: 44px;
 }
-header h1 { margin: 0; font-size: 16px; font-weight: 600; }
-.subtitle { margin: 2px 0 0; font-size: 11px; color: var(--muted); }
+.header-title { display: flex; flex-direction: column; line-height: 1.1; }
+header h1 { margin: 0; font-size: 15px; font-weight: 600; }
+.subtitle { margin: 1px 0 0; font-size: 10.5px; color: var(--muted); }
 /* ===== MENU BAR ===== */
 .menubar {
   display: flex;
   align-items: center;
   gap: 2px;
-}
-.menu {
   position: relative;
+  z-index: 50;
 }
+.menu { position: relative; }
+
 .menu-trigger {
   background: transparent;
-  border: 1px solid transparent;
-  padding: 6px 14px;
+  border: none;
+  padding: 7px 14px;
   cursor: pointer;
   font-size: 13px;
   color: var(--text);
-  border-radius: 4px;
+  border-radius: 5px;
   font-family: inherit;
   font-weight: 500;
+  transition: background .12s, color .12s;
 }
-.menu-trigger:hover {
-  background: #eef0f5;
-}
+.menu-trigger:hover { background: #eef0f5; }
 .menu.open .menu-trigger {
   background: var(--accent);
   color: #fff;
 }
+
+/* Dropdowns open to the LEFT of the trigger (right-aligned) so they don't
+   overflow the viewport when the menubar is at the right edge of the header. */
 .menu-dropdown {
   display: none;
   position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
+  top: calc(100% + 6px);
+  right: 0;
+  left: auto;
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: 6px;
-  box-shadow: 0 6px 22px rgba(0,0,0,0.13), 0 2px 6px rgba(0,0,0,0.06);
+  border-radius: 8px;
+  box-shadow:
+    0 10px 30px rgba(15, 25, 50, 0.12),
+    0 2px 8px rgba(15, 25, 50, 0.06);
   list-style: none;
   margin: 0;
-  padding: 4px 0;
-  min-width: 280px;
+  padding: 5px;
+  min-width: 260px;
   z-index: 100;
+  animation: menuFadeIn .12s ease-out;
+}
+@keyframes menuFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .menu.open .menu-dropdown { display: block; }
 .menu-dropdown li { margin: 0; padding: 0; }
-.menu-item {
+
+.menu-item,
+.menu-toggle {
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
-  padding: 7px 14px;
+  padding: 7px 10px;
   text-align: left;
   background: transparent;
   border: none;
@@ -125,64 +140,91 @@ header h1 { margin: 0; font-size: 16px; font-weight: 600; }
   font-size: 13px;
   color: var(--text);
   font-family: inherit;
-  border-radius: 0;
-  border-left: none;
-  border-right: none;
+  border-radius: 5px;
+  margin: 0;
+  line-height: 1.3;
 }
-.menu-item:hover {
-  background: #f0f4fa;
+.menu-item:hover,
+.menu-toggle:hover {
+  background: var(--accent);
+  color: #fff;
 }
+.menu-item:hover .mi-key,
+.menu-item:hover .mi-hint {
+  color: rgba(255, 255, 255, 0.78);
+}
+
 .mi-icon {
-  width: 18px;
-  display: inline-block;
-  text-align: center;
+  width: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
   flex-shrink: 0;
+  opacity: 0.7;
 }
+.menu-item:hover .mi-icon { opacity: 1; }
+
 .mi-key {
   margin-left: auto;
   font-size: 10px;
   color: var(--muted);
-  font-family: monospace;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+.menu-item:hover .mi-key {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 .mi-hint {
   font-size: 11px;
   color: var(--muted);
   font-weight: normal;
+  margin-left: auto;
 }
+
 .menu-section {
-  padding: 7px 14px 3px;
+  padding: 9px 10px 4px;
   font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.7px;
   color: var(--muted);
   font-weight: 600;
 }
+.menu-section + li button.menu-item { margin-top: 1px; }
+
 .menu-info {
-  padding: 3px 14px;
+  padding: 3px 10px;
   font-size: 11px;
   color: var(--muted);
   line-height: 1.4;
+  cursor: default;
 }
-.menu-toggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 14px;
-  cursor: pointer;
-  font-size: 13px;
-  color: var(--text);
+
+.menu-toggle input {
   margin: 0;
+  accent-color: var(--accent);
 }
-.menu-toggle:hover { background: #f0f4fa; }
-.menu-toggle input { margin: 0; }
+
 .separator {
   border-top: 1px solid var(--border);
-  margin: 4px 0;
+  margin: 5px 4px;
+  list-style: none;
 }
-.menubar.busy .menu-toggle::after {
-  content: " (завантаження…)";
+
+.menubar.busy .menu-trigger[data-menu="settings"]::after,
+.menu[data-menu="settings"] .menu-toggle::after {
+  content: "";
+}
+.menubar.busy::after {
+  content: "Завантаження шрифтів…";
   font-size: 10px;
   color: var(--accent);
+  margin-left: 8px;
+  align-self: center;
 }
 
 /* ===== MAIN LAYOUT ===== */
