@@ -59,8 +59,23 @@ const DEFAULT_LINES = [
 ];
 
 // Presets are loaded asynchronously from `presets.json` (public, committed)
-// and `presets.local.json` (private, gitignored). Both files are merged.
+// and `presets.local.json` (private, gitignored). User presets stored in
+// localStorage are also merged in. All three sources show up in the dropdown.
 let PRESETS = {};
+
+const LS_AUTORESUME_KEY  = "stamp.autoresume.v1";
+const LS_USER_PRESETS_KEY = "stamp.userPresets.v1";
+
+function lsGetUserPresets() {
+  try { return JSON.parse(localStorage.getItem(LS_USER_PRESETS_KEY) || "{}"); }
+  catch { return {}; }
+}
+
+function lsSaveUserPresets(map) {
+  try { localStorage.setItem(LS_USER_PRESETS_KEY, JSON.stringify(map)); return true; }
+  catch { return false; }
+}
+
 async function loadPresets() {
   for (const url of ["presets.json", "presets.local.json"]) {
     try {
@@ -68,19 +83,90 @@ async function loadPresets() {
       if (r.ok) Object.assign(PRESETS, await r.json());
     } catch { /* presets.local.json is optional — ignore failure */ }
   }
+  // User-named presets saved from the «Файл → Зберегти як пресет» menu
+  const user = lsGetUserPresets();
+  for (const [key, data] of Object.entries(user)) {
+    PRESETS[`__user__${key}`] = { ...data, label: `★ ${data.label || key}` };
+  }
   populatePresetDropdown();
 }
 
 function populatePresetDropdown() {
   if (!els.preset) return;
-  // Clear existing options except the "— оберіть —" placeholder
   Array.from(els.preset.options).forEach(o => { if (o.value) o.remove(); });
-  for (const [key, p] of Object.entries(PRESETS)) {
+  // Built-in presets first, user presets afterward (recognised by `__user__` prefix)
+  const sorted = Object.entries(PRESETS).sort(([a], [b]) => {
+    const aUser = a.startsWith("__user__"), bUser = b.startsWith("__user__");
+    if (aUser !== bUser) return aUser ? 1 : -1;
+    return 0;
+  });
+  for (const [key, p] of sorted) {
     const opt = document.createElement("option");
     opt.value = key;
     opt.textContent = p.label || key;
     els.preset.appendChild(opt);
   }
+}
+
+// ===== Auto-save current form state to localStorage =====
+let _lsSaveTimer = null;
+function lsScheduleAutosave() {
+  clearTimeout(_lsSaveTimer);
+  _lsSaveTimer = setTimeout(() => {
+    try { localStorage.setItem(LS_AUTORESUME_KEY, JSON.stringify(getStampJson())); }
+    catch { /* quota / privacy mode — ignore */ }
+  }, 250);
+}
+
+function lsRestoreAutosave() {
+  try {
+    const raw = localStorage.getItem(LS_AUTORESUME_KEY);
+    if (!raw) return false;
+    loadStampJson(JSON.parse(raw));
+    return true;
+  } catch { return false; }
+}
+
+function lsClearAutosave() {
+  try { localStorage.removeItem(LS_AUTORESUME_KEY); } catch {}
+}
+
+// ===== Save current state as a named user preset =====
+function saveAsUserPreset() {
+  const name = prompt("Назва пресета (як буде показано у списку):");
+  if (!name) return;
+  const trimmed = name.trim();
+  if (!trimmed) return;
+  const all = lsGetUserPresets();
+  if (all[trimmed] && !confirm(`Пресет "${trimmed}" вже існує. Перезаписати?`)) return;
+  const data = getStampJson();
+  data.label = trimmed;
+  all[trimmed] = data;
+  if (!lsSaveUserPresets(all)) {
+    alert("Не вдалося зберегти у браузері (можливо, заповнено сховище).");
+    return;
+  }
+  PRESETS[`__user__${trimmed}`] = { ...data, label: `★ ${trimmed}` };
+  populatePresetDropdown();
+  els.preset.value = `__user__${trimmed}`;
+  alert(`Пресет "${trimmed}" збережено в браузері.`);
+}
+
+function deleteUserPresetUi() {
+  const all = lsGetUserPresets();
+  const names = Object.keys(all);
+  if (!names.length) { alert("У браузері немає збережених пресетів."); return; }
+  const list = names.map((n, i) => `${i + 1}. ${n}`).join("\n");
+  const ans = prompt(`Який пресет видалити? Введи номер:\n\n${list}`);
+  if (!ans) return;
+  const idx = parseInt(ans, 10) - 1;
+  if (isNaN(idx) || idx < 0 || idx >= names.length) { alert("Невірний номер."); return; }
+  const name = names[idx];
+  if (!confirm(`Видалити пресет "${name}"?`)) return;
+  delete all[name];
+  lsSaveUserPresets(all);
+  delete PRESETS[`__user__${name}`];
+  populatePresetDropdown();
 }
 
 // ============================================================
@@ -1048,6 +1134,9 @@ function render() {
 
   // Background photo follows zoom changes too
   updateBgImage();
+
+  // Auto-save current state to localStorage (debounced)
+  lsScheduleAutosave();
 }
 
 // ============================================================
@@ -2041,8 +2130,13 @@ function bind() {
     e.target.value = ""; // allow reselecting the same file
   });
   $("resetBtn").addEventListener("click", () => {
-    if (confirm("Скинути всі поля?")) location.reload();
+    if (confirm("Скинути всі поля? Авто-збережений стан у браузері буде стертий.")) {
+      lsClearAutosave();
+      location.reload();
+    }
   });
+  $("saveAsUserPreset")?.addEventListener("click", saveAsUserPreset);
+  $("deleteUserPreset")?.addEventListener("click", deleteUserPresetUi);
 
   // Background photo controls
   els.bgFile.addEventListener("change", onBgFileChange);
@@ -2085,5 +2179,6 @@ function bind() {
 syncSizeOptions();
 setLines(DEFAULT_LINES);
 bind();
-render();
+// Restore last session from localStorage if available; falls back to HTML defaults.
+if (!lsRestoreAutosave()) render();
 loadPresets();

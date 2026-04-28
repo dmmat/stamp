@@ -17,12 +17,17 @@
       <div class="menu" data-menu="file">
         <button class="menu-trigger" type="button">Файл</button>
         <ul class="menu-dropdown" role="menu">
-          <li><button class="menu-item" id="importJson" type="button"><span class="mi-icon">📂</span>Завантажити JSON…<span class="mi-key">Ctrl+O</span></button></li>
-          <li><button class="menu-item" id="exportJson" type="button"><span class="mi-icon">💾</span>Зберегти JSON<span class="mi-key">Ctrl+S</span></button></li>
+          <li class="menu-section">У браузері (швидко)</li>
+          <li><button class="menu-item" id="saveAsUserPreset" type="button"><span class="mi-icon">★</span>Зберегти як пресет…</button></li>
+          <li><button class="menu-item" id="deleteUserPreset" type="button"><span class="mi-icon">🗑</span>Видалити пресет з браузера…</button></li>
           <li class="separator"></li>
+          <li class="menu-section">Файл</li>
+          <li><button class="menu-item" id="importJson" type="button"><span class="mi-icon">📂</span>Завантажити JSON…</button></li>
+          <li><button class="menu-item" id="exportJson" type="button"><span class="mi-icon">💾</span>Зберегти JSON</button></li>
           <li><button class="menu-item" id="copySvg" type="button"><span class="mi-icon">📋</span>Скопіювати SVG в буфер</button></li>
           <li class="separator"></li>
           <li><button class="menu-item" id="resetBtn" type="button"><span class="mi-icon">↺</span>Скинути все</button></li>
+          <li class="menu-info">Стан печатки авто-зберігається в браузері при кожній зміні</li>
         </ul>
       </div>
 
