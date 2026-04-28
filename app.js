@@ -9,7 +9,8 @@ const els = {
   font: $("font"), weight: $("weight"), case: $("case"),
   preset: $("preset"),
   topFont: $("topFont"), bottomFont: $("bottomFont"), midFont: $("midFont"),
-  topStarMul: $("topStarMul"), bottomStarMul: $("bottomStarMul"),
+  topStarMul: $("topStarMul"),
+  midSpacing: $("midSpacing"), midOffset: $("midOffset"),
 
   topText: $("topText"), topSize: $("topSize"), topSpacing: $("topSpacing"), topOffset: $("topOffset"),
   bottomText: $("bottomText"), bottomSize: $("bottomSize"), bottomSpacing: $("bottomSpacing"), bottomOffset: $("bottomOffset"),
@@ -347,17 +348,19 @@ function drawCircle(root, cx, cy, r) {
   const botPathR = bandOuter - gap + parseFloat(els.bottomOffset.value || 0);
 
   const topMul = parseFloat(els.topStarMul?.value || 1.6);
-  const botMul = parseFloat(els.bottomStarMul?.value || 1.6);
   drawArcText(root, cx, cy, topPathR, applyCase(els.topText.value),
     topH, parseFloat(els.topSpacing.value), "top", topMul, els.topFont?.value);
   drawArcText(root, cx, cy, botPathR, applyCase(els.bottomText.value),
-    botH, parseFloat(els.bottomSpacing.value), "bottom", botMul, els.bottomFont?.value);
+    botH, parseFloat(els.bottomSpacing.value), "bottom", 1, els.bottomFont?.value);
 
   // 6. Mid arc (e.g. "Код 12345678") — radius is user-defined diameter / 2
   if (els.midText.value) {
-    const midR = parseFloat(els.midRadius.value) / 2;
+    const midR = parseFloat(els.midRadius.value) / 2
+                  + parseFloat(els.midOffset?.value || 0);
     drawArcText(root, cx, cy, midR, applyCase(els.midText.value),
-      parseFloat(els.midSize.value), 0.1, els.midPos.value, 1, els.midFont?.value);
+      parseFloat(els.midSize.value),
+      parseFloat(els.midSpacing?.value || 0.1),
+      els.midPos.value, 1, els.midFont?.value);
   }
 
   // 7. Center content fits inside innerR
