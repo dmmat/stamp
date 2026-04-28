@@ -378,12 +378,30 @@ function drawCircle(root, cx, cy, r) {
   drawCenterContent(root, cx, cy, innerR - 1);
 }
 
+// Helpers shared by drawEllipse / drawRect / drawTriangle. The non-circle
+// shapes don't have a separate "innerOffset" field anymore — derive a sensible
+// 3mm fallback (matches the visual default that used to live in the form).
+function nonCircleInnerOffset() {
+  return 3;
+}
+// Map decorative inner-ring style → simple stroke style understood by ellipse/rect/triangle.
+function nonCircleInnerStyle() {
+  const s = els.innerRingStyle?.value || "none";
+  if (s === "none") return "none";
+  if (s === "dashed") return "dashed";
+  if (s === "double") return "double";
+  // simple, zigzag, meander, chain, rope, braid, cable, dots — render as plain stroke
+  return "solid";
+}
+
 // ----- ELLIPSE -----
 function drawEllipse(root, cx, cy, rx, ry) {
   const outerW = parseFloat(els.outerWidth.value);
   const innerW = parseFloat(els.innerWidth.value);
-  const offset = parseFloat(els.innerOffset.value);
-  const innerStyle = els.innerStyle.value;
+  // Non-circle shapes derive offset from outer-vs-inner ring (default 3mm).
+  // innerStyle is the simplified ring kind: solid / dashed / double / none.
+  const offset = nonCircleInnerOffset();
+  const innerStyle = nonCircleInnerStyle();
 
   if (outerW > 0) {
     const e = document.createElementNS(SVG_NS, "ellipse");
@@ -408,8 +426,10 @@ function drawEllipse(root, cx, cy, rx, ry) {
 function drawRect(root, cx, cy, w, h) {
   const outerW = parseFloat(els.outerWidth.value);
   const innerW = parseFloat(els.innerWidth.value);
-  const offset = parseFloat(els.innerOffset.value);
-  const innerStyle = els.innerStyle.value;
+  // Non-circle shapes derive offset from outer-vs-inner ring (default 3mm).
+  // innerStyle is the simplified ring kind: solid / dashed / double / none.
+  const offset = nonCircleInnerOffset();
+  const innerStyle = nonCircleInnerStyle();
   const x = cx - w / 2, y = cy - h / 2;
 
   if (outerW > 0) {
@@ -434,8 +454,10 @@ function drawTriangle(root, cx, cy, side) {
   const h = side * Math.sqrt(3) / 2;
   const outerW = parseFloat(els.outerWidth.value);
   const innerW = parseFloat(els.innerWidth.value);
-  const offset = parseFloat(els.innerOffset.value);
-  const innerStyle = els.innerStyle.value;
+  // Non-circle shapes derive offset from outer-vs-inner ring (default 3mm).
+  // innerStyle is the simplified ring kind: solid / dashed / double / none.
+  const offset = nonCircleInnerOffset();
+  const innerStyle = nonCircleInnerStyle();
 
   const top = [cx, cy - h * 2 / 3];
   const bl = [cx - side / 2, cy + h / 3];
