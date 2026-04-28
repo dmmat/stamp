@@ -68,53 +68,122 @@ header {
 }
 header h1 { margin: 0; font-size: 16px; font-weight: 600; }
 .subtitle { margin: 2px 0 0; font-size: 11px; color: var(--muted); }
-.header-actions { display: flex; gap: 6px; align-items: center; }
-.curves-toggle {
+/* ===== MENU BAR ===== */
+.menubar {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  color: var(--muted);
-  margin: 0 4px 0 0;
-  padding: 5px 9px;
-  border: 1px solid var(--border);
-  border-radius: 5px;
+  gap: 2px;
+}
+.menu {
+  position: relative;
+}
+.menu-trigger {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 6px 14px;
   cursor: pointer;
+  font-size: 13px;
+  color: var(--text);
+  border-radius: 4px;
+  font-family: inherit;
+  font-weight: 500;
+}
+.menu-trigger:hover {
+  background: #eef0f5;
+}
+.menu.open .menu-trigger {
+  background: var(--accent);
+  color: #fff;
+}
+.menu-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
   background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.13), 0 2px 6px rgba(0,0,0,0.06);
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  min-width: 280px;
+  z-index: 100;
 }
-.curves-toggle:hover { background: #f0f2f7; }
-.curves-toggle input { margin: 0; }
-.curves-toggle.busy { color: var(--accent); }
-.curves-toggle.busy::after {
-  content: " (завантаження…)";
-  font-size: 10px;
-}
-
-.png-group {
-  display: inline-flex;
-  align-items: stretch;
-  gap: 0;
-  border-radius: 5px;
-  overflow: hidden;
-}
-.png-group button {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+.menu.open .menu-dropdown { display: block; }
+.menu-dropdown li { margin: 0; padding: 0; }
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 14px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text);
+  font-family: inherit;
+  border-radius: 0;
+  border-left: none;
   border-right: none;
 }
-.png-group select {
-  width: auto;
-  border-radius: 0;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  margin: 0;
-  padding: 0 6px;
-  font-size: 11px;
-  height: auto;
-  background: var(--panel-2);
-  cursor: pointer;
+.menu-item:hover {
+  background: #f0f4fa;
 }
-.png-group select:hover { background: #eef1f6; }
+.mi-icon {
+  width: 18px;
+  display: inline-block;
+  text-align: center;
+  flex-shrink: 0;
+}
+.mi-key {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--muted);
+  font-family: monospace;
+}
+.mi-hint {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: normal;
+}
+.menu-section {
+  padding: 7px 14px 3px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.menu-info {
+  padding: 3px 14px;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.menu-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 14px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text);
+  margin: 0;
+}
+.menu-toggle:hover { background: #f0f4fa; }
+.menu-toggle input { margin: 0; }
+.separator {
+  border-top: 1px solid var(--border);
+  margin: 4px 0;
+}
+.menubar.busy .menu-toggle::after {
+  content: " (завантаження…)";
+  font-size: 10px;
+  color: var(--accent);
+}
 
 /* ===== MAIN LAYOUT ===== */
 main {

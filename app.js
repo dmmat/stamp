@@ -1515,7 +1515,7 @@ async function convertCurvedText(textEl, tpEl, baseSize, family, weight, style, 
 }
 
 function setCurvesBusy(busy) {
-  document.querySelector(".curves-toggle")?.classList.toggle("busy", busy);
+  document.querySelector(".menubar")?.classList.toggle("busy", busy);
 }
 
 async function maybeConvertCurves(svg) {
@@ -1926,12 +1926,14 @@ function makeDxf(entities) {
   return out.join("\r\n") + "\r\n";
 }
 
-async function exportPng() {
+async function exportPng(dpi) {
+  // dpi is now an explicit argument coming from the Експорт menu items.
+  // Default to 600 if called without one (kept for backwards-compat).
+  if (typeof dpi !== "number") dpi = 600;
   const svg = await maybeConvertCurves(buildSvg());
   const xml = new XMLSerializer().serializeToString(svg);
   const blob = new Blob([xml], { type: "image/svg+xml;charset=utf-8" });
   const url = URL.createObjectURL(blob);
-  const dpi = parseInt($("pngDpi")?.value || "600", 10);
   // viewBox is in mm. 1 inch = 25.4 mm → pixelsPerMm = dpi / 25.4
   const scale = dpi / 25.4;
   const img = new Image();
@@ -1998,8 +2000,39 @@ function bind() {
 
   $("exportSvg").addEventListener("click", exportSvg);
   $("exportDxf").addEventListener("click", exportDxf);
-  $("exportPng").addEventListener("click", exportPng);
   $("copySvg").addEventListener("click", copySvg);
+
+  // PNG menu items — кожен пункт у меню «Експорт» має свій DPI у data-dpi.
+  document.querySelectorAll(".png-item").forEach(btn => {
+    btn.addEventListener("click", () => exportPng(parseInt(btn.dataset.dpi, 10)));
+  });
+
+  // Меню-бар: відкриття/закриття випадаючих списків
+  document.querySelectorAll(".menu-trigger").forEach(trig => {
+    trig.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const m = trig.parentElement;
+      const wasOpen = m.classList.contains("open");
+      document.querySelectorAll(".menu.open").forEach(x => x.classList.remove("open"));
+      if (!wasOpen) m.classList.add("open");
+    });
+  });
+  // Клік по пункту меню — закрити меню (за винятком чекбоксу-перемикача).
+  document.querySelectorAll(".menu-item").forEach(item => {
+    item.addEventListener("click", () => {
+      document.querySelectorAll(".menu.open").forEach(x => x.classList.remove("open"));
+    });
+  });
+  // Клік поза меню — закрити
+  document.addEventListener("click", () => {
+    document.querySelectorAll(".menu.open").forEach(x => x.classList.remove("open"));
+  });
+  // Esc — закрити
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      document.querySelectorAll(".menu.open").forEach(x => x.classList.remove("open"));
+    }
+  });
   $("exportJson").addEventListener("click", exportJson);
   $("importJson").addEventListener("click", () => $("importJsonFile").click());
   $("importJsonFile").addEventListener("change", (e) => {
