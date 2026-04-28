@@ -73,6 +73,8 @@
   <!-- ========== SIDEBAR ========== -->
   <aside class="controls">
 
+    <h2 class="group-title">⚙️ Геометрія</h2>
+
     <details open>
       <summary>📐 Форма та розмір</summary>
       <div class="grid-2">
@@ -136,6 +138,8 @@
         </select>
       </label>
     </details>
+
+    <h2 class="group-title">✍️ Текст</h2>
 
     <details open>
       <summary>🔝 Верхня дуга</summary>
@@ -282,6 +286,8 @@
       <button id="addLine" class="full">+ Додати рядок</button>
     </details>
 
+    <h2 class="group-title">🔗 Кільця</h2>
+
     <details open>
       <summary>⭕ Зовнішнє кільце (основне)</summary>
       <label>Стиль
@@ -351,6 +357,8 @@
       </label>
     </details>
 
+    <h2 class="group-title">🎨 Декор</h2>
+
     <details>
       <summary>🛡 Захисний узор (гільош)</summary>
       <label>Узор
@@ -375,16 +383,6 @@
     </details>
 
     <details>
-      <summary>✦ Тризуб у центрі</summary>
-      <label>
-        <input type="checkbox" id="showTrident" />
-        Малювати тризуб замість центрального тексту
-      </label>
-      <input type="hidden" id="showStars" />
-      <input type="hidden" id="separator" value="*" />
-    </details>
-
-    <details>
       <summary>💧 Реалістичність</summary>
       <label>
         <input type="checkbox" id="distress" />
@@ -395,8 +393,45 @@
       </label>
     </details>
 
+    <h2 class="group-title">🖼 Лого та звірка</h2>
+
     <details>
-      <summary>🖼 Підложка з фотографією</summary>
+      <summary>🎯 Лого в центрі (SVG)</summary>
+      <label>Завантажити SVG лого
+        <input type="file" id="logoFile" accept=".svg,image/svg+xml" />
+      </label>
+      <div class="logo-actions">
+        <button id="logoClear" type="button">🗑 Прибрати</button>
+        <span id="logoFileName" class="logo-filename">— не вибрано —</span>
+      </div>
+      <label>
+        <input type="checkbox" id="logoEnabled" />
+        Показувати лого
+      </label>
+      <label>Розмір (мм)
+        <input type="range" id="logoSize" min="2" max="40" step="0.5" value="10" />
+      </label>
+      <div class="grid-2">
+        <label>X (мм)
+          <input type="number" id="logoX" value="0" step="0.2" />
+        </label>
+        <label>Y (мм)
+          <input type="number" id="logoY" value="0" step="0.2" />
+        </label>
+      </div>
+      <label>Поворот (°)
+        <input type="range" id="logoRotate" min="-180" max="180" value="0" />
+      </label>
+      <label>
+        <input type="checkbox" id="logoTint" checked />
+        Перефарбувати у колір печатки
+      </label>
+      <input type="hidden" id="showStars" />
+      <input type="hidden" id="separator" value="*" />
+    </details>
+
+    <details>
+      <summary>📷 Підкладка з фотографією</summary>
       <label>Завантажити фото
         <input type="file" id="bgFile" accept="image/*" />
       </label>

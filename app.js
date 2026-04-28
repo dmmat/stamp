@@ -21,7 +21,7 @@ const els = {
   lineSpacing: $("lineSpacing"),
   centerYOffset: $("centerYOffset"),
 
-  showStars: $("showStars"), showTrident: $("showTrident"),
+  showStars: $("showStars"),
   separator: $("separator"),
 
   outerWidth: $("outerWidth"), outerStyle: $("outerStyle"),
@@ -43,6 +43,13 @@ const els = {
   bgOpacity: $("bgOpacity"), bgScale: $("bgScale"),
   bgX: $("bgX"), bgY: $("bgY"), bgRotate: $("bgRotate"),
   bgOnTop: $("bgOnTop"), bgImage: $("bgImage"),
+  logoFile: $("logoFile"), logoClear: $("logoClear"),
+  logoFileName: $("logoFileName"),
+  logoEnabled: $("logoEnabled"),
+  logoSize: $("logoSize"),
+  logoX: $("logoX"), logoY: $("logoY"),
+  logoRotate: $("logoRotate"),
+  logoTint: $("logoTint"),
   exportAsCurves: $("exportAsCurves"),
 
   stage: $("stage"),
@@ -850,47 +857,92 @@ function drawStar(root, x, y, size) {
   root.appendChild(star);
 }
 
-function drawTrident(root, cx, cy, size) {
-  const s = size;
-  const path = document.createElementNS(SVG_NS, "path");
-  const d = `
-    M ${cx - 0.04*s} ${cy - 0.5*s}
-    L ${cx + 0.04*s} ${cy - 0.5*s}
-    L ${cx + 0.04*s} ${cy + 0.5*s}
-    L ${cx - 0.04*s} ${cy + 0.5*s} Z
-    M ${cx - 0.42*s} ${cy - 0.5*s}
-    L ${cx - 0.32*s} ${cy - 0.5*s}
-    L ${cx - 0.32*s} ${cy + 0.15*s}
-    L ${cx - 0.18*s} ${cy + 0.15*s}
-    L ${cx - 0.18*s} ${cy - 0.25*s}
-    L ${cx - 0.10*s} ${cy - 0.25*s}
-    L ${cx - 0.10*s} ${cy + 0.5*s}
-    L ${cx - 0.18*s} ${cy + 0.5*s}
-    L ${cx - 0.18*s} ${cy + 0.25*s}
-    L ${cx - 0.42*s} ${cy + 0.25*s} Z
-    M ${cx + 0.42*s} ${cy - 0.5*s}
-    L ${cx + 0.32*s} ${cy - 0.5*s}
-    L ${cx + 0.32*s} ${cy + 0.15*s}
-    L ${cx + 0.18*s} ${cy + 0.15*s}
-    L ${cx + 0.18*s} ${cy - 0.25*s}
-    L ${cx + 0.10*s} ${cy - 0.25*s}
-    L ${cx + 0.10*s} ${cy + 0.5*s}
-    L ${cx + 0.18*s} ${cy + 0.5*s}
-    L ${cx + 0.18*s} ${cy + 0.25*s}
-    L ${cx + 0.42*s} ${cy + 0.25*s} Z
-  `;
-  path.setAttribute("d", d);
-  path.setAttribute("fill", root.getAttribute("fill"));
-  path.setAttribute("stroke", "none");
-  root.appendChild(path);
+function drawCenterContent(root, cx, cy, maxR) {
+  drawStackedLines(root, cx, cy);
+  drawLogo(root, cx, cy);
 }
 
-function drawCenterContent(root, cx, cy, maxR) {
-  if (els.showTrident.checked) {
-    drawTrident(root, cx, cy, maxR * 1.1);
-    return;
+// User-uploaded SVG logo, embedded at the centre with size/position/rotation
+// controls. Stored as parsed { viewBox, innerHTML } so each render can clone it.
+let _logoData = null;
+
+function loadLogoFromFile(file) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(reader.result, "image/svg+xml");
+      const err = doc.querySelector("parsererror");
+      if (err) throw new Error("Не валідний SVG");
+      const root = doc.querySelector("svg");
+      if (!root) throw new Error("Немає <svg> у файлі");
+      let vb = root.getAttribute("viewBox");
+      let viewBox;
+      if (vb) {
+        viewBox = vb.split(/[\s,]+/).map(parseFloat);
+      } else {
+        const w = parseFloat(root.getAttribute("width") || "100");
+        const h = parseFloat(root.getAttribute("height") || "100");
+        viewBox = [0, 0, w, h];
+      }
+      const inner = Array.from(root.childNodes)
+        .map(n => n.nodeType === 1 ? n.outerHTML : "")
+        .join("");
+      _logoData = { viewBox, inner, name: file.name };
+      els.logoFileName.textContent = file.name;
+      els.logoEnabled.checked = true;
+      render();
+    } catch (e) {
+      alert("Не вдалося прочитати SVG: " + e.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+function clearLogo() {
+  _logoData = null;
+  els.logoFile.value = "";
+  els.logoFileName.textContent = "— не вибрано —";
+  els.logoEnabled.checked = false;
+  render();
+}
+
+function drawLogo(root, cx, cy) {
+  if (!_logoData || !els.logoEnabled?.checked) return;
+  const sizeMm = parseFloat(els.logoSize.value) || 10;
+  const dx = parseFloat(els.logoX.value || 0);
+  const dy = parseFloat(els.logoY.value || 0);
+  const rot = parseFloat(els.logoRotate.value || 0);
+  const tint = els.logoTint?.checked;
+
+  const [vbX, vbY, vbW, vbH] = _logoData.viewBox;
+  const maxDim = Math.max(vbW, vbH);
+  if (maxDim <= 0) return;
+  const scale = sizeMm / maxDim;
+  // Translate to center of stamp + offset; rotate; scale; then re-center logo on origin.
+  const offX = -(vbX + vbW / 2);
+  const offY = -(vbY + vbH / 2);
+
+  const g = document.createElementNS(SVG_NS, "g");
+  g.setAttribute("transform",
+    `translate(${cx + dx} ${cy + dy}) rotate(${rot}) scale(${scale}) translate(${offX} ${offY})`);
+  if (tint) {
+    // Force monochrome: every fillable shape gets the stamp's colour, strokes too.
+    g.setAttribute("fill", root.getAttribute("fill"));
+    g.setAttribute("stroke", root.getAttribute("stroke"));
+    g.innerHTML = stripFillStroke(_logoData.inner);
+  } else {
+    g.innerHTML = _logoData.inner;
   }
-  drawStackedLines(root, cx, cy);
+  root.appendChild(g);
+}
+
+// Remove `fill="..."` and `stroke="..."` attributes from inner HTML so the
+// inherited `<g>` fill/stroke takes over (used by the «Перефарбувати» toggle).
+function stripFillStroke(html) {
+  return html
+    .replace(/\s(?:fill|stroke)="[^"]*"/gi, "")
+    .replace(/\s(?:fill|stroke):[^;"]*[;"]?/gi, "");
 }
 
 function drawStackedLines(root, cx, cy) {
@@ -929,7 +981,6 @@ const PRESET_DEFAULTS = {
   ring2Enabled: true, ring2Diameter: 36, ring2Width: 0.5, ring2Style: "solid",
   innerRingStyle: "simple", innerDiameter: 28, innerWidth: 0.5, innerPatternHeight: 1.2,
   guillochePattern: "none", guillocheOpacity: 20, guillocheDensity: 100,
-  showTrident: false,
   distress: false, distressLevel: 40,
 };
 
@@ -2166,6 +2217,13 @@ function bind() {
     $(id).addEventListener("change", updateBgImage);
   });
   bindBgDrag();
+
+  // SVG logo controls
+  els.logoFile.addEventListener("change", (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (f) loadLogoFromFile(f);
+  });
+  els.logoClear.addEventListener("click", clearLogo);
 
   // Zoom controls
   els.zoomSlider.addEventListener("input", () => {
