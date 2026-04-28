@@ -257,7 +257,11 @@ function getDimensions() {
 function buildSvg() {
   const shape = els.shape.value;
   const { width, height } = getDimensions();
-  const margin = 2;
+  // Tight margin — just enough to fit the outer stroke (and distress filter
+  // displacement, which can push glyphs ~1mm outward). No empty padding.
+  const ow = parseFloat(els.outerWidth?.value || 0);
+  const baseMargin = Math.max(0.4, ow / 2 + 0.3);
+  const margin = els.distress?.checked ? baseMargin + 1.0 : baseMargin;
   const vbW = width + margin * 2;
   const vbH = height + margin * 2;
   const cx = vbW / 2;
@@ -1102,8 +1106,15 @@ function applyZoom() {
   svg.setAttribute("height", mmH * px * k);
   els.zoomLabel.textContent = `${currentZoom}%`;
   els.zoomSlider.value = currentZoom;
-  els.dimsLabel.textContent =
-    `${(mmW - 4).toFixed(1)} × ${(mmH - 4).toFixed(1)} мм · зум ${currentZoom}%`;
+  // Show actual stamp dimensions (from getDimensions), not the trimmed viewBox
+  const dim = getDimensions?.();
+  if (dim) {
+    els.dimsLabel.textContent =
+      `${dim.width.toFixed(1)} × ${dim.height.toFixed(1)} мм · зум ${currentZoom}%`;
+  } else {
+    els.dimsLabel.textContent =
+      `${mmW.toFixed(1)} × ${mmH.toFixed(1)} мм · зум ${currentZoom}%`;
+  }
   if (typeof updateBgImage === "function") updateBgImage();
 }
 
