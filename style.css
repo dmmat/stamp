@@ -306,7 +306,20 @@ input[type="range"] { width: 100%; padding: 0; margin-top: 4px; accent-color: va
 .preset-row { margin-top: 12px !important; }
 
 /* ===== CENTER LINES ===== */
-#centerLines { display: flex; flex-direction: column; gap: 8px; }
+.center-globals {
+  padding-bottom: 12px;
+  margin-bottom: 4px;
+  border-bottom: 1px dashed var(--border);
+}
+.center-lines-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+  font-weight: 600;
+  margin: 10px 0 6px;
+}
+#centerLines { display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; }
 .line-row {
   display: grid;
   grid-template-rows: auto auto;
