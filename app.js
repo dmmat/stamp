@@ -1111,6 +1111,69 @@ const FONT_URLS = {
     "0,1": `${FONT_BASE}/Antonio-Regular.ttf`,
     "1,1": `${FONT_BASE}/Antonio-Bold.ttf`,
   },
+  // Microsoft Core Fonts — copied from /usr/share/fonts/TTF by setup-fonts.sh.
+  // If files are missing the converter falls back to Roboto-equivalents.
+  arial: {
+    "0,0": `${FONT_BASE}/Arial-Regular.ttf`,
+    "1,0": `${FONT_BASE}/Arial-Bold.ttf`,
+    "0,1": `${FONT_BASE}/Arial-Italic.ttf`,
+    "1,1": `${FONT_BASE}/Arial-BoldItalic.ttf`,
+  },
+  times: {
+    "0,0": `${FONT_BASE}/Times-Regular.ttf`,
+    "1,0": `${FONT_BASE}/Times-Bold.ttf`,
+    "0,1": `${FONT_BASE}/Times-Italic.ttf`,
+    "1,1": `${FONT_BASE}/Times-BoldItalic.ttf`,
+  },
+  verdana: {
+    "0,0": `${FONT_BASE}/Verdana-Regular.ttf`,
+    "1,0": `${FONT_BASE}/Verdana-Bold.ttf`,
+    "0,1": `${FONT_BASE}/Verdana-Italic.ttf`,
+    "1,1": `${FONT_BASE}/Verdana-BoldItalic.ttf`,
+  },
+  georgia: {
+    "0,0": `${FONT_BASE}/Georgia-Regular.ttf`,
+    "1,0": `${FONT_BASE}/Georgia-Bold.ttf`,
+    "0,1": `${FONT_BASE}/Georgia-Italic.ttf`,
+    "1,1": `${FONT_BASE}/Georgia-BoldItalic.ttf`,
+  },
+  tahoma: {
+    "0,0": `${FONT_BASE}/Tahoma-Regular.ttf`,
+    "1,0": `${FONT_BASE}/Tahoma-Bold.ttf`,
+    "0,1": `${FONT_BASE}/Tahoma-Regular.ttf`,
+    "1,1": `${FONT_BASE}/Tahoma-Bold.ttf`,
+  },
+  trebuchet: {
+    "0,0": `${FONT_BASE}/Trebuchet-Regular.ttf`,
+    "1,0": `${FONT_BASE}/Trebuchet-Bold.ttf`,
+    "0,1": `${FONT_BASE}/Trebuchet-Italic.ttf`,
+    "1,1": `${FONT_BASE}/Trebuchet-BoldItalic.ttf`,
+  },
+  courier: {
+    "0,0": `${FONT_BASE}/Courier-Regular.ttf`,
+    "1,0": `${FONT_BASE}/Courier-Bold.ttf`,
+    "0,1": `${FONT_BASE}/Courier-Italic.ttf`,
+    "1,1": `${FONT_BASE}/Courier-BoldItalic.ttf`,
+  },
+  impact: {
+    "0,0": `${FONT_BASE}/Impact-Regular.ttf`,
+    "1,0": `${FONT_BASE}/Impact-Regular.ttf`,
+    "0,1": `${FONT_BASE}/Impact-Regular.ttf`,
+    "1,1": `${FONT_BASE}/Impact-Regular.ttf`,
+  },
+};
+
+// If a "real" font group's file 404s (user didn't run setup-fonts.sh or has no
+// system MS fonts), fall back to the closest open-source Roboto variant.
+const FALLBACK_GROUP = {
+  arial: "sans",
+  times: "serif",
+  verdana: "sans",
+  georgia: "serif",
+  tahoma: "sans",
+  trebuchet: "sans",
+  courier: "mono",
+  impact: "black",
 };
 
 // Set of group keys whose italic variant is faked with skewX(-12°).
@@ -1119,23 +1182,30 @@ const SYNTH_ITALIC_GROUPS = new Set(["antonio"]);
 function pickFontGroup(family) {
   if (!family) return "sans";
   const f = family.toLowerCase();
+  // Specific Microsoft Core Fonts route to their own groups (real Arial/Times/etc.
+  // copied by setup-fonts.sh from /usr/share/fonts). Fallback handled in loader.
   if (f.includes("antonio")) return "antonio";
-  if (f.includes("courier") || f.includes("mono")) return "mono";
+  if (f.includes("arial narrow") || f.includes("narrow") || f.includes("condensed")) return "condensed";
+  if (f.includes("arial black")) return "black";
+  if (f.includes("arial")) return "arial";
+  if (f.includes("times new roman") || f.includes("times")) return "times";
+  if (f.includes("verdana")) return "verdana";
+  if (f.includes("georgia")) return "georgia";
+  if (f.includes("tahoma")) return "tahoma";
+  if (f.includes("trebuchet")) return "trebuchet";
+  if (f.includes("courier")) return "courier";
+  if (f.includes("impact")) return "impact";
+  if (f.includes("mono")) return "mono";
   // BUG FIX: "Arial, sans-serif" used to match `serif` because the literal
   // substring "serif" appears inside "sans-serif". Strip "sans-serif" first.
   const noSans = f.replace(/sans[-\s]?serif/g, "");
   const isSerifFamily =
-    noSans.includes("times") ||
-    noSans.includes("georgia") ||
     noSans.includes("garamond") ||
     noSans.includes("pt serif") ||
     noSans.includes("roboto slab") ||
     /\bserif\b/.test(noSans);
   if (isSerifFamily) return "serif";
-  // Impact and Black variants share the heavy/black group (Roboto Black has italic);
-  // Anton lacks italic, so we route here for full Bold/Italic/BoldItalic support.
-  if (f.includes("impact") || f.includes("black")) return "black";
-  if (f.includes("narrow") || f.includes("condensed")) return "condensed";
+  if (f.includes("black")) return "black";
   return "sans";
 }
 
@@ -1168,21 +1238,35 @@ const _fontCache = new Map();
 async function loadConvertFont(family, weight, style) {
   const isBold = (weight === "bold" || parseInt(weight, 10) >= 600) ? 1 : 0;
   const isItalic = style === "italic" ? 1 : 0;
-  const group = pickFontGroup(family);
-  const key = `${group}|${isBold},${isItalic}`;
-  if (_fontCache.has(key)) {
-    return { font: _fontCache.get(key), group, italic: isItalic === 1 };
-  }
-  const url = (FONT_URLS[group] || FONT_URLS.sans)[`${isBold},${isItalic}`];
-  const buf = await fetch(url).then(r => {
-    if (!r.ok) {
-      throw new Error(`Шрифт ${url} не знайдено (${r.status}). Запусти ./setup-fonts.sh у директорії проєкту, щоб завантажити шрифти локально.`);
+  const initialGroup = pickFontGroup(family);
+  const variant = `${isBold},${isItalic}`;
+
+  // Try the requested group first, then walk the fallback chain (e.g. arial → sans).
+  const tried = new Set();
+  let group = initialGroup;
+  while (group && !tried.has(group)) {
+    tried.add(group);
+    const cacheKey = `${group}|${variant}`;
+    if (_fontCache.has(cacheKey)) {
+      return { font: _fontCache.get(cacheKey), group, italic: isItalic === 1 };
     }
-    return r.arrayBuffer();
-  });
-  const font = window.opentype.parse(buf);
-  _fontCache.set(key, font);
-  return { font, group, italic: isItalic === 1 };
+    const url = (FONT_URLS[group] || {})[variant];
+    if (url) {
+      try {
+        const r = await fetch(url);
+        if (r.ok) {
+          const buf = await r.arrayBuffer();
+          const font = window.opentype.parse(buf);
+          _fontCache.set(cacheKey, font);
+          return { font, group, italic: isItalic === 1 };
+        }
+      } catch { /* network or parse error — try fallback */ }
+    }
+    group = FALLBACK_GROUP[group] || (group === "sans" ? null : "sans");
+  }
+  throw new Error(
+    `Не вдалося завантажити жоден шрифт. Запусти ./setup-fonts.sh у директорії проєкту.`
+  );
 }
 
 function getInheritedAttr(el, name) {

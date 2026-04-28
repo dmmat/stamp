@@ -69,6 +69,61 @@ for entry in "${FONTS[@]}"; do
 done
 
 echo
+# Microsoft Core Fonts (Arial, Times, Verdana, Georgia, Impact) — копіюємо з системи,
+# якщо встановлено пакетом ttf-ms-fonts (Manjaro/Arch). Це робить «Текст у криві»
+# справжнім Arial/Times замість open-source аналогів (Roboto/Roboto Slab).
+copy_ms_font() {
+  local name="$1" target="$2" src
+  for d in /usr/share/fonts/TTF /usr/share/fonts/truetype/msttcorefonts /usr/local/share/fonts ~/.local/share/fonts ~/.fonts; do
+    for ext in ttf TTF; do
+      src="$d/$name.$ext"
+      if [[ -f "$src" ]]; then
+        cp "$src" "fonts/$target"
+        ok=$((ok + 1))
+        echo "  ✓ $target (з $src)"
+        return 0
+      fi
+    done
+  done
+  echo "  · $target — не знайдено в системі (буде fallback на Roboto)"
+  return 1
+}
+
+echo "=== Microsoft Core Fonts (з системи) ==="
+# Arial: Microsoft naming → Arialbd=Bold, Ariali=Italic, Arialbi=BoldItalic
+copy_ms_font Arial    Arial-Regular.ttf
+copy_ms_font Arialbd  Arial-Bold.ttf
+copy_ms_font Ariali   Arial-Italic.ttf
+copy_ms_font Arialbi  Arial-BoldItalic.ttf
+# Times New Roman
+copy_ms_font Times    Times-Regular.ttf
+copy_ms_font Timesbd  Times-Bold.ttf
+copy_ms_font Timesi   Times-Italic.ttf
+copy_ms_font Timesbi  Times-BoldItalic.ttf
+# Verdana — суфікс "z" у Microsoft = BoldItalic
+copy_ms_font Verdana  Verdana-Regular.ttf
+copy_ms_font Verdanab Verdana-Bold.ttf
+copy_ms_font Verdanai Verdana-Italic.ttf
+copy_ms_font Verdanaz Verdana-BoldItalic.ttf
+# Georgia
+copy_ms_font Georgia  Georgia-Regular.ttf
+copy_ms_font Georgiab Georgia-Bold.ttf
+copy_ms_font Georgiai Georgia-Italic.ttf
+copy_ms_font Georgiaz Georgia-BoldItalic.ttf
+# Impact, Tahoma, Trebuchet, Courier
+copy_ms_font Impact   Impact-Regular.ttf
+copy_ms_font Tahoma   Tahoma-Regular.ttf
+copy_ms_font Tahomabd Tahoma-Bold.ttf
+copy_ms_font Trebuc   Trebuchet-Regular.ttf
+copy_ms_font Trebucbd Trebuchet-Bold.ttf
+copy_ms_font Trebucit Trebuchet-Italic.ttf
+copy_ms_font Trebucbi Trebuchet-BoldItalic.ttf
+copy_ms_font Cour     Courier-Regular.ttf
+copy_ms_font Courbd   Courier-Bold.ttf
+copy_ms_font Couri    Courier-Italic.ttf
+copy_ms_font Courbi   Courier-BoldItalic.ttf
+
+echo
 # Antonio static Regular + Bold come from a ZIP (gwfh). Download + unzip if missing.
 if [[ ! -s "fonts/Antonio-Regular.ttf" || ! -s "fonts/Antonio-Bold.ttf" ]]; then
   echo "  ⬇ Antonio-Regular.ttf + Antonio-Bold.ttf (ZIP від google-webfonts-helper)"
