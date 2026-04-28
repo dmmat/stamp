@@ -1,0 +1,50 @@
+{
+  "example-tov": {
+    "label": "ТОВ — основна печатка",
+    "shape": "circle", "size": "38", "color": "#1a4fa3",
+    "topText": "ТОВ «ПРИКЛАД»", "topSize": 2.6,
+    "bottomText": "ЄДРПОУ 12345678 · м. КИЇВ", "bottomSize": 1.9,
+    "midText": "", "midSize": 1.7, "midRadius": 24, "midPos": "bottom",
+    "outerWidth": 1.0,
+    "ring2Enabled": true, "ring2Diameter": 36, "ring2Width": 0.5,
+    "innerRingStyle": "simple", "innerDiameter": 28, "innerWidth": 0.5,
+    "lines": [
+      { "text": "ОСНОВНА", "size": 2.6, "weight": "bold" },
+      { "text": "ПЕЧАТКА", "size": 2.6, "weight": "bold" }
+    ],
+    "showStars": true, "showTrident": false
+  },
+
+  "example-fop": {
+    "label": "ФОП",
+    "shape": "circle", "size": "30", "color": "#1a4fa3",
+    "topText": "ФОП ІВАНЕНКО", "topSize": 2.2,
+    "bottomText": "ІПН 1234567890 · м. ЛЬВІВ", "bottomSize": 1.6,
+    "midText": "", "midSize": 1.6, "midRadius": 18, "midPos": "bottom",
+    "outerWidth": 0.8,
+    "ring2Enabled": true, "ring2Diameter": 28, "ring2Width": 0.4,
+    "innerRingStyle": "simple", "innerDiameter": 22, "innerWidth": 0.4,
+    "lines": [
+      { "text": "ІВАН", "size": 2.0, "weight": "bold" },
+      { "text": "ІВАНОВИЧ", "size": 2.0, "weight": "bold" }
+    ],
+    "showStars": true, "showTrident": false
+  },
+
+  "example-doctors": {
+    "label": "«Для документів»",
+    "shape": "circle", "size": "38", "color": "#1a4fa3",
+    "topText": "ТОВ «ПРИКЛАД»", "topSize": 2.6,
+    "bottomText": "ЄДРПОУ 12345678 · м. КИЇВ", "bottomSize": 1.9,
+    "midText": "", "midSize": 1.7, "midRadius": 24, "midPos": "bottom",
+    "outerWidth": 1.0,
+    "ring2Enabled": true, "ring2Diameter": 36, "ring2Width": 0.5,
+    "innerRingStyle": "simple", "innerDiameter": 28, "innerWidth": 0.5,
+    "lines": [
+      { "text": "ДЛЯ", "size": 2.4, "weight": "bold" },
+      { "text": "ДОКУМЕНТІВ", "size": 2.6, "weight": "bold" },
+      { "text": "№ 1", "size": 2.0, "weight": "" }
+    ],
+    "showStars": true, "showTrident": false
+  }
+}

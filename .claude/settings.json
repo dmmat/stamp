@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -m http.server:*)",
+      "Bash(xdg-open:*)",
+      "Bash(xmllint:*)",
+      "Bash(pkill -f http.server*)",
+      "Bash(curl -sf http://localhost:*)"
+    ]
+  }
+}

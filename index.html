@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Генератор печаток — Україна</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div>
+      <h1>Генератор печаток</h1>
+      <p class="subtitle">Україна · стандартні розміри · експорт SVG / PNG</p>
+    </div>
+    <div class="header-actions">
+      <label class="curves-toggle" title="Перетворювати весь текст у криві перед експортом — гарантує однаковий вигляд в Inkscape, CorelDraw, друку">
+        <input type="checkbox" id="exportAsCurves" />
+        <span>Текст → криві</span>
+      </label>
+      <button id="exportSvg" class="primary">⬇ SVG</button>
+      <button id="exportDxf" title="DXF R14 для Fusion 360 / CAD — текст автоматично конвертується у криві">⬇ DXF</button>
+      <button id="exportPng">⬇ PNG</button>
+      <button id="copySvg">📋 SVG</button>
+      <button id="exportJson" title="Зберегти налаштування печатки">💾 JSON</button>
+      <button id="importJson" title="Завантажити збережені налаштування">📂 JSON</button>
+      <input type="file" id="importJsonFile" accept=".json,application/json" style="display:none;" />
+      <button id="resetBtn" class="ghost">↺ Скинути</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="controls">
+
+    <details open>
+      <summary>📐 Форма та розмір</summary>
+      <div class="grid-2">
+        <label>Форма
+          <select id="shape">
+            <option value="circle">Кругла</option>
+            <option value="ellipse">Овальна</option>
+            <option value="rect">Прямокутна</option>
+            <option value="triangle">Трикутна</option>
+          </select>
+        </label>
+        <label>Розмір
+          <select id="size">
+            <option data-shape="circle" value="38">Ø 38 мм (стандарт)</option>
+            <option data-shape="circle" value="40">Ø 40 мм</option>
+            <option data-shape="circle" value="42">Ø 42 мм</option>
+            <option data-shape="circle" value="45">Ø 45 мм</option>
+            <option data-shape="circle" value="30">Ø 30 мм</option>
+            <option data-shape="circle" value="25">Ø 25 мм</option>
+            <option data-shape="ellipse" value="50x35">50 × 35 мм</option>
+            <option data-shape="ellipse" value="55x35">55 × 35 мм</option>
+            <option data-shape="ellipse" value="60x40">60 × 40 мм</option>
+            <option data-shape="rect" value="60x25">60 × 25 мм</option>
+            <option data-shape="rect" value="70x30">70 × 30 мм</option>
+            <option data-shape="rect" value="50x20">50 × 20 мм</option>
+            <option data-shape="triangle" value="45">45 мм</option>
+            <option data-shape="triangle" value="50">50 мм</option>
+          </select>
+        </label>
+        <label>Колір
+          <input type="color" id="color" value="#1a4fa3" />
+        </label>
+        <label>Гарнітура
+          <select id="font">
+            <option value="Arial, sans-serif">Arial</option>
+            <option value="'Times New Roman', serif">Times New Roman</option>
+            <option value="'Courier New', monospace">Courier New</option>
+            <option value="Verdana, sans-serif">Verdana</option>
+            <option value="Tahoma, sans-serif">Tahoma</option>
+            <option value="Georgia, serif">Georgia</option>
+            <option value="'PT Sans', sans-serif">PT Sans</option>
+            <option value="'PT Serif', serif">PT Serif</option>
+          </select>
+        </label>
+        <label>Жирність
+          <select id="weight">
+            <option value="normal">Звичайний</option>
+            <option value="bold" selected>Жирний</option>
+          </select>
+        </label>
+        <label>Регістр
+          <select id="case">
+            <option value="normal" selected>Як введено</option>
+            <option value="upper">ВЕЛИКІ</option>
+          </select>
+        </label>
+      </div>
+      <label class="preset-row">Готовий пресет
+        <select id="preset">
+          <option value="">— оберіть для авто-заповнення —</option>
+        </select>
+      </label>
+    </details>
+
+    <details open>
+      <summary>🔝 Верхня дуга</summary>
+      <label>Текст <span class="hint-inline">— символ <code>*</code> рендериться більшим</span>
+        <input type="text" id="topText" value="ТОВ «ПРИКЛАД»" />
+      </label>
+      <div class="grid-3">
+        <label>Розмір (мм)
+          <input type="number" id="topSize" value="2.6" step="0.1" min="1" max="6" />
+        </label>
+        <label>Інтервал
+          <input type="number" id="topSpacing" value="0.3" step="0.05" min="-1" max="3" />
+        </label>
+        <label>Зсув (мм)
+          <input type="number" id="topOffset" value="0" step="0.2" min="-10" max="10" />
+        </label>
+      </div>
+      <label>Множник для <code>*</code>
+        <input type="number" id="topStarMul" value="1.6" step="0.1" min="1" max="3" />
+      </label>
+      <label>Шрифт верхньої дуги
+        <select id="topFont">
+          <option value="">— як основний —</option>
+          <option value="Arial, sans-serif">Arial</option>
+          <option value="'Arial Narrow', Arial, sans-serif">Arial Narrow</option>
+          <option value="'Arial Black', Arial, sans-serif">Arial Black</option>
+          <option value="'Times New Roman', serif">Times New Roman</option>
+          <option value="Georgia, serif">Georgia</option>
+          <option value="'Courier New', monospace">Courier New</option>
+          <option value="Verdana, sans-serif">Verdana</option>
+          <option value="Tahoma, sans-serif">Tahoma</option>
+          <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+          <option value="Impact, sans-serif">Impact</option>
+          <option value="'Antonio', Impact, sans-serif">Antonio (близько до Impact, є bold)</option>
+          <option value="'Oswald', Impact, sans-serif">Oswald (display, є italic-фейк)</option>
+          <option value="'Bebas Neue', Impact, sans-serif">Bebas Neue (тільки Regular)</option>
+          <option value="'Anton', Impact, sans-serif">Anton (тільки Regular, дуже жирний)</option>
+          <option value="'PT Sans', sans-serif">PT Sans</option>
+          <option value="'PT Serif', serif">PT Serif</option>
+        </select>
+      </label>
+    </details>
+
+    <details open>
+      <summary>🔽 Нижня дуга</summary>
+      <label>Текст <span class="hint-inline">— символ <code>*</code> рендериться більшим</span>
+        <input type="text" id="bottomText" value="ЄДРПОУ 12345678 · м. КИЇВ" />
+      </label>
+      <div class="grid-3">
+        <label>Розмір (мм)
+          <input type="number" id="bottomSize" value="1.8" step="0.1" min="1" max="6" />
+        </label>
+        <label>Інтервал
+          <input type="number" id="bottomSpacing" value="0.15" step="0.05" min="-1" max="3" />
+        </label>
+        <label>Зсув (мм)
+          <input type="number" id="bottomOffset" value="0" step="0.2" min="-10" max="10" />
+        </label>
+      </div>
+      <label>Множник для <code>*</code>
+        <input type="number" id="bottomStarMul" value="1.6" step="0.1" min="1" max="3" />
+      </label>
+      <label>Шрифт нижньої дуги
+        <select id="bottomFont">
+          <option value="">— як основний —</option>
+          <option value="Arial, sans-serif">Arial</option>
+          <option value="'Arial Narrow', Arial, sans-serif">Arial Narrow</option>
+          <option value="'Arial Black', Arial, sans-serif">Arial Black</option>
+          <option value="'Times New Roman', serif">Times New Roman</option>
+          <option value="Georgia, serif">Georgia</option>
+          <option value="'Courier New', monospace">Courier New</option>
+          <option value="Verdana, sans-serif">Verdana</option>
+          <option value="Tahoma, sans-serif">Tahoma</option>
+          <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+          <option value="Impact, sans-serif">Impact</option>
+          <option value="'Antonio', Impact, sans-serif">Antonio (близько до Impact, є bold)</option>
+          <option value="'Oswald', Impact, sans-serif">Oswald (display, є italic-фейк)</option>
+          <option value="'Bebas Neue', Impact, sans-serif">Bebas Neue (тільки Regular)</option>
+          <option value="'Anton', Impact, sans-serif">Anton (тільки Regular, дуже жирний)</option>
+          <option value="'PT Sans', sans-serif">PT Sans</option>
+          <option value="'PT Serif', serif">PT Serif</option>
+        </select>
+      </label>
+    </details>
+
+    <details>
+      <summary>↘ Середня дуга (під центром, напр. «Код …»)</summary>
+      <label>Текст
+        <input type="text" id="midText" value="" />
+      </label>
+      <div class="grid-3">
+        <label>Розмір (мм)
+          <input type="number" id="midSize" value="1.7" step="0.1" min="1" max="5" />
+        </label>
+        <label>Діаметр (мм)
+          <input type="number" id="midRadius" value="24" step="0.5" min="3" max="50" />
+        </label>
+        <label>Положення
+          <select id="midPos">
+            <option value="bottom">Знизу</option>
+            <option value="top">Зверху</option>
+          </select>
+        </label>
+      </div>
+      <label>Шрифт
+        <select id="midFont">
+          <option value="">— як основний —</option>
+          <option value="Arial, sans-serif">Arial</option>
+          <option value="'Arial Narrow', Arial, sans-serif">Arial Narrow</option>
+          <option value="'Times New Roman', serif">Times New Roman</option>
+          <option value="Georgia, serif">Georgia</option>
+          <option value="'Courier New', monospace">Courier New</option>
+          <option value="Verdana, sans-serif">Verdana</option>
+          <option value="Tahoma, sans-serif">Tahoma</option>
+          <option value="Impact, sans-serif">Impact</option>
+          <option value="'Antonio', Impact, sans-serif">Antonio</option>
+          <option value="'Oswald', Impact, sans-serif">Oswald</option>
+          <option value="'Bebas Neue', Impact, sans-serif">Bebas Neue</option>
+          <option value="'Anton', Impact, sans-serif">Anton</option>
+          <option value="'PT Sans', sans-serif">PT Sans</option>
+        </select>
+      </label>
+    </details>
+
+    <details open>
+      <summary>📝 Центральний блок</summary>
+      <div id="centerLines"></div>
+      <button id="addLine" class="full">+ Додати рядок</button>
+    </details>
+
+    <details open>
+      <summary>⭕ Зовнішнє кільце (основне)</summary>
+      <label>Стиль
+        <select id="outerStyle">
+          <option value="solid">№ 01 — суцільне</option>
+          <option value="thin">№ 02 — тонке</option>
+          <option value="double">№ 03 — подвійне</option>
+          <option value="text">№ 04 — з текстом-візерунком</option>
+        </select>
+      </label>
+      <label>Товщина (мм)
+        <input type="number" id="outerWidth" value="1.0" step="0.05" min="0" max="3" />
+      </label>
+      <label id="outerPatternTextLabel" style="display:none;">Текст-візерунок (повторюватиметься)
+        <input type="text" id="outerPatternText" value="* ЗРАЗОК * ПЕЧАТКА *" />
+      </label>
+    </details>
+
+    <details open>
+      <summary>◯ Друге кільце (тонке, біля зовнішнього)</summary>
+      <label>
+        <input type="checkbox" id="ring2Enabled" checked />
+        Увімкнути друге кільце
+      </label>
+      <div class="grid-2">
+        <label>Діаметр (мм)
+          <input type="number" id="ring2Diameter" value="36" step="0.5" min="5" max="100" />
+        </label>
+        <label>Товщина (мм)
+          <input type="number" id="ring2Width" value="0.5" step="0.05" min="0" max="2" />
+        </label>
+      </div>
+      <label>Стиль
+        <select id="ring2Style">
+          <option value="solid">Суцільна</option>
+          <option value="dashed">Пунктир</option>
+        </select>
+      </label>
+    </details>
+
+    <details open>
+      <summary>🌀 Внутрішнє кільце</summary>
+      <label>Стиль
+        <select id="innerRingStyle">
+          <option value="none">— без —</option>
+          <option value="simple" selected>№ 00 — просте кільце</option>
+          <option value="dashed">№ 01 — пунктир</option>
+          <option value="zigzag">№ 02 — зигзаг</option>
+          <option value="meander">№ 03 — меандр (грецький)</option>
+          <option value="chain">№ 04 — ланцюг</option>
+          <option value="rope">№ 05 — мотузка</option>
+          <option value="braid">№ 06 — плетіння</option>
+          <option value="cable">№ 07 — кабель</option>
+          <option value="dots">№ 08 — крапки</option>
+        </select>
+      </label>
+      <div class="grid-2">
+        <label>Діаметр (мм)
+          <input type="number" id="innerDiameter" value="28" step="0.5" min="5" max="100" />
+        </label>
+        <label>Товщина (мм)
+          <input type="number" id="innerWidth" value="0.5" step="0.05" min="0" max="2" />
+        </label>
+      </div>
+      <label>Висота візерунка (мм)
+        <input type="number" id="innerPatternHeight" value="1.2" step="0.1" min="0.3" max="4" />
+      </label>
+    </details>
+
+    <details>
+      <summary>🛡 Захисний узор (гільош)</summary>
+      <label>Узор
+        <select id="guillochePattern">
+          <option value="none">— без узору —</option>
+          <option value="dots">№ 01 — крапки</option>
+          <option value="dotsDense">№ 02 — щільні крапки</option>
+          <option value="diagonal">№ 03 — діагональ</option>
+          <option value="crosshatch">№ 04 — сітка</option>
+          <option value="waves">№ 05 — хвилі</option>
+          <option value="mesh">№ 06 — кружки</option>
+          <option value="weave">№ 07 — плетіння</option>
+          <option value="moire">№ 08 — муар</option>
+        </select>
+      </label>
+      <label>Прозорість
+        <input type="range" id="guillocheOpacity" min="5" max="100" value="20" />
+      </label>
+      <label>Щільність
+        <input type="range" id="guillocheDensity" min="20" max="200" value="100" />
+      </label>
+    </details>
+
+    <details>
+      <summary>✦ Тризуб у центрі</summary>
+      <label>
+        <input type="checkbox" id="showTrident" />
+        Малювати тризуб замість центрального тексту
+      </label>
+      <input type="hidden" id="showStars" />
+      <input type="hidden" id="separator" value="*" />
+    </details>
+
+    <details>
+      <summary>💧 Реалістичність</summary>
+      <label>
+        <input type="checkbox" id="distress" />
+        Ефект потертості (нерівний відбиток)
+      </label>
+      <label>Інтенсивність потертості
+        <input type="range" id="distressLevel" min="0" max="100" value="40" />
+      </label>
+    </details>
+
+    <details>
+      <summary>🖼 Підложка з фотографією</summary>
+      <label>Завантажити фото
+        <input type="file" id="bgFile" accept="image/*" />
+      </label>
+      <button id="bgClear" class="full" style="margin-top:6px;">Прибрати фото</button>
+      <label>Прозорість
+        <input type="range" id="bgOpacity" min="0" max="100" value="60" />
+      </label>
+      <label>Масштаб (%)
+        <input type="range" id="bgScale" min="10" max="500" value="100" />
+      </label>
+      <div class="grid-2">
+        <label>X (мм)
+          <input type="number" id="bgX" value="0" step="0.5" />
+        </label>
+        <label>Y (мм)
+          <input type="number" id="bgY" value="0" step="0.5" />
+        </label>
+      </div>
+      <label>Поворот (°)
+        <input type="range" id="bgRotate" min="-180" max="180" value="0" />
+      </label>
+      <label>
+        <input type="checkbox" id="bgOnTop" />
+        Над печаткою (інакше — під)
+      </label>
+      <p class="hint" style="background:none;border:none;padding:0;margin:8px 0 0;">
+        💡 Утримуй <kbd>Shift</kbd> і тягни мишкою по фото — щоб переміщувати.
+      </p>
+    </details>
+
+  </aside>
+
+  <!-- ========== PREVIEW ========== -->
+  <section class="preview">
+    <div class="preview-toolbar">
+      <button class="zoom-btn" id="zoomOut" title="Зменшити">−</button>
+      <input type="range" id="zoomSlider" min="50" max="600" value="200" step="10" />
+      <button class="zoom-btn" id="zoomIn" title="Збільшити">+</button>
+      <span class="zoom-label" id="zoomLabel">200%</span>
+      <span class="sep"></span>
+      <button class="zoom-btn" id="zoomFit" title="Підігнати">⤢ Fit</button>
+      <button class="zoom-btn" id="zoom100" title="100%">1:1</button>
+      <span class="sep"></span>
+      <label class="bg-toggle">
+        <input type="checkbox" id="showPaper" checked /> Папір
+      </label>
+      <label class="bg-toggle">
+        <input type="checkbox" id="showRuler" /> Лінійка
+      </label>
+    </div>
+    <div class="preview-area" id="previewArea">
+      <div class="preview-canvas" id="previewCanvas">
+        <img id="bgImage" alt="" />
+        <div id="stage"></div>
+      </div>
+    </div>
+    <p class="hint" id="dimsLabel">—</p>
+  </section>
+</main>
+
+<footer>Локально, без серверу. Жодних даних не передається назовні.</footer>
+
+<template id="line-row-template">
+  <div class="line-row">
+    <input type="text" class="line-text" placeholder="Текст рядка" />
+    <div class="line-controls">
+      <input type="number" class="line-size" value="2.0" step="0.1" min="0.5" max="10" title="Розмір (мм)" placeholder="мм" />
+      <select class="line-weight" title="Жирність">
+        <option value="">авто</option>
+        <option value="normal">звич.</option>
+        <option value="bold">жирн.</option>
+      </select>
+      <select class="line-style" title="Стиль">
+        <option value="normal">прямий</option>
+        <option value="italic">курсив</option>
+      </select>
+      <select class="line-font" title="Шрифт цього рядка">
+        <option value="">— основний шрифт —</option>
+        <option value="Arial, sans-serif">Arial</option>
+        <option value="'Arial Narrow', Arial, sans-serif">Arial Narrow</option>
+        <option value="'Arial Black', Arial, sans-serif">Arial Black</option>
+        <option value="'Times New Roman', serif">Times New Roman</option>
+        <option value="Georgia, serif">Georgia</option>
+        <option value="'Courier New', monospace">Courier New</option>
+        <option value="Verdana, sans-serif">Verdana</option>
+        <option value="Tahoma, sans-serif">Tahoma</option>
+        <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+        <option value="Impact, sans-serif">Impact</option>
+        <option value="'Antonio', Impact, sans-serif">Antonio</option>
+        <option value="'Oswald', Impact, sans-serif">Oswald</option>
+        <option value="'Bebas Neue', Impact, sans-serif">Bebas Neue</option>
+        <option value="'Anton', Impact, sans-serif">Anton</option>
+        <option value="'PT Sans', sans-serif">PT Sans</option>
+        <option value="'PT Serif', serif">PT Serif</option>
+      </select>
+      <button class="line-up" title="Підняти вище">▲</button>
+      <button class="line-down" title="Опустити нижче">▼</button>
+      <button class="line-remove" title="Видалити рядок">✕</button>
+    </div>
+  </div>
+</template>
+
+<script src="app.js"></script>
+</body>
+</html>

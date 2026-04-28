@@ -1,0 +1,15 @@
+.DS_Store
+*.swp
+*.swo
+node_modules/
+.idea/
+.vscode/
+.claude/settings.local.json
+/tmp/
+*.log
+
+# Приватні пресети — не комітимо. Створюються користувачем локально.
+presets.local.json
+presets.local.*.json
+# Custom local stamps directory if створюється через JSON-експорт
+private-stamps/
