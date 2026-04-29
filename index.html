@@ -139,9 +139,9 @@
       </label>
     </details>
 
-    <h2 class="group-title">✍️ Текст</h2>
+    <h2 class="group-title" data-shape="circle ellipse">✍️ Текст по дугах</h2>
 
-    <details open>
+    <details open data-shape="circle ellipse">
       <summary>🔝 Верхня дуга</summary>
       <label>Текст <span class="hint-inline">— символ <code>*</code> рендериться більшим</span>
         <input type="text" id="topText" value="ТОВ «ПРИКЛАД»" />
@@ -183,7 +183,7 @@
       </label>
     </details>
 
-    <details open>
+    <details open data-shape="circle ellipse">
       <summary>🔽 Нижня дуга</summary>
       <label>Текст <span class="hint-inline">— символ <code>*</code> рендериться більшим</span>
         <input type="text" id="bottomText" value="ЄДРПОУ 12345678 · м. КИЇВ" />
@@ -222,7 +222,7 @@
       </label>
     </details>
 
-    <details>
+    <details data-shape="circle">
       <summary>↘ Середня дуга (під центром, напр. «Код …»)</summary>
       <label>Текст
         <input type="text" id="midText" value="" />
@@ -306,7 +306,7 @@
       </label>
     </details>
 
-    <details open>
+    <details open data-shape="circle">
       <summary>◯ Друге кільце (тонке, біля зовнішнього)</summary>
       <label>
         <input type="checkbox" id="ring2Enabled" checked />
@@ -359,7 +359,7 @@
 
     <h2 class="group-title">🎨 Декор</h2>
 
-    <details>
+    <details data-shape="circle ellipse">
       <summary>🛡 Захисний узор (гільош)</summary>
       <label>Узор
         <select id="guillochePattern">

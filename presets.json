@@ -1,4 +1,24 @@
 {
+  "example-test-coop": {
+    "label": "🧪 Тестова — кругла з арками (для перевірки)",
+    "shape": "circle", "size": "38", "color": "#1a4fa3",
+    "topText": "* УКРАЇНА *", "topSize": 2.6,
+    "bottomText": "Тестова область * Тестовий район * с. Тестове",
+    "bottomSize": 1.8,
+    "midText": "Код 12345678", "midSize": 1.7, "midRadius": 24, "midPos": "bottom",
+    "outerWidth": 1.0,
+    "ring2Enabled": true, "ring2Diameter": 36, "ring2Width": 0.5,
+    "innerRingStyle": "simple", "innerDiameter": 28, "innerWidth": 0.5,
+    "lines": [
+      { "text": "Сільсько-", "size": 1.9, "weight": "" },
+      { "text": "господарський", "size": 1.9, "weight": "" },
+      { "text": "виробничий", "size": 1.9, "weight": "" },
+      { "text": "кооператив", "size": 1.9, "weight": "" },
+      { "text": "\"ЗРАЗОК\"", "size": 2.4, "weight": "bold", "font": "'Antonio', Impact, sans-serif" }
+    ],
+    "showStars": true
+  },
+
   "example-tov": {
     "label": "ТОВ — основна печатка",
     "shape": "circle", "size": "38", "color": "#1a4fa3",

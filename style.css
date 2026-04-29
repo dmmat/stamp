@@ -257,6 +257,12 @@ main {
 }
 .controls > .group-title:first-child { margin-top: 4px; }
 
+/* Show only sections relevant to the current shape. JS toggles `body.shape-*`. */
+body.shape-circle    [data-shape]:not([data-shape~="circle"])   { display: none; }
+body.shape-ellipse   [data-shape]:not([data-shape~="ellipse"])  { display: none; }
+body.shape-rect      [data-shape]:not([data-shape~="rect"])     { display: none; }
+body.shape-triangle  [data-shape]:not([data-shape~="triangle"]) { display: none; }
+
 .logo-actions {
   display: flex;
   align-items: center;
@@ -494,6 +500,22 @@ button.full { width: 100%; margin-top: 8px; }
 }
 #stage { display: inline-block; position: relative; z-index: 1; }
 #stage svg { display: block; }
+
+/* Click-to-edit: hover highlights tagged element, click opens its sidebar section */
+#stage svg [data-section] { cursor: pointer; }
+#stage svg [data-section]:hover {
+  filter: drop-shadow(0 0 1px rgba(26, 79, 163, 0.7))
+          drop-shadow(0 0 2px rgba(26, 79, 163, 0.4));
+}
+
+/* Briefly highlight the sidebar section opened by a click */
+@keyframes sectionFlash {
+  0%   { box-shadow: 0 0 0 2px var(--accent), 0 0 12px rgba(26, 79, 163, 0.5); }
+  100% { box-shadow: 0 0 0 0 transparent, 0 0 0 transparent; }
+}
+.controls details.flash {
+  animation: sectionFlash 1.2s ease-out;
+}
 
 /* Background image overlay (for visual comparison with a real stamp) */
 .preview-canvas { position: relative; }

@@ -238,6 +238,9 @@ function syncSizeOptions() {
   }
   const cur = els.size.options[els.size.selectedIndex];
   if (!cur || cur.hidden) els.size.value = firstVisible;
+  // Drive the body class so CSS hides sections that don't apply to the chosen shape.
+  document.body.classList.remove("shape-circle", "shape-ellipse", "shape-rect", "shape-triangle");
+  document.body.classList.add(`shape-${shape}`);
 }
 
 function applyCase(s) {
@@ -398,8 +401,6 @@ function nonCircleInnerStyle() {
 function drawEllipse(root, cx, cy, rx, ry) {
   const outerW = parseFloat(els.outerWidth.value);
   const innerW = parseFloat(els.innerWidth.value);
-  // Non-circle shapes derive offset from outer-vs-inner ring (default 3mm).
-  // innerStyle is the simplified ring kind: solid / dashed / double / none.
   const offset = nonCircleInnerOffset();
   const innerStyle = nonCircleInnerStyle();
 
@@ -414,12 +415,24 @@ function drawEllipse(root, cx, cy, rx, ry) {
     root.appendChild(e);
   }
 
-  const tH = parseFloat(els.topSize.value);
-  drawCenteredText(root, applyCase(els.topText.value), cx, cy - ry + offset + tH * 1.1, tH, "middle");
-  const bH = parseFloat(els.bottomSize.value);
-  drawCenteredText(root, applyCase(els.bottomText.value), cx, cy + ry - offset - bH * 0.4, bH, "middle");
+  // Arc text along the actual ellipse curve. Path radius = bandOuter shrunk by
+  // text height for top (glyphs extend outward), or = bandOuter for bottom
+  // (glyphs extend inward).
+  const bandRx = rx - outerW / 2;
+  const bandRy = ry - outerW / 2;
+  const topH = parseFloat(els.topSize.value);
+  const botH = parseFloat(els.bottomSize.value);
+  const gap = 0.3;
+  const topMul = parseFloat(els.topStarMul?.value || 1.6);
+  // For ellipse, scale rx/ry proportionally so text sits inside the band.
+  const kTop = (Math.min(bandRx, bandRy) - topH - gap) / Math.min(bandRx, bandRy);
+  const kBot = (Math.min(bandRx, bandRy) - gap) / Math.min(bandRx, bandRy);
+  drawArcText(root, cx, cy, bandRx * kTop, applyCase(els.topText.value),
+    topH, parseFloat(els.topSpacing.value), "top", topMul, els.topFont?.value, bandRy * kTop);
+  drawArcText(root, cx, cy, bandRx * kBot, applyCase(els.bottomText.value),
+    botH, parseFloat(els.bottomSpacing.value), "bottom", 1, els.bottomFont?.value, bandRy * kBot);
 
-  drawCenterContent(root, cx, cy, Math.min(rx, ry) * 0.75);
+  drawCenterContent(root, cx, cy, Math.min(rx, ry) * 0.7);
 }
 
 // ----- RECT -----
@@ -450,34 +463,42 @@ function drawRect(root, cx, cy, w, h) {
 }
 
 // ----- TRIANGLE -----
+// Equilateral triangle, apex up. Centred by *bounding-box*, not centroid —
+// so the apex stays inside the viewBox. Text and inner-ring scaling work
+// around the actual visual centroid (1/3 above base, 2/3 below apex).
 function drawTriangle(root, cx, cy, side) {
   const h = side * Math.sqrt(3) / 2;
   const outerW = parseFloat(els.outerWidth.value);
   const innerW = parseFloat(els.innerWidth.value);
-  // Non-circle shapes derive offset from outer-vs-inner ring (default 3mm).
-  // innerStyle is the simplified ring kind: solid / dashed / double / none.
   const offset = nonCircleInnerOffset();
   const innerStyle = nonCircleInnerStyle();
 
-  const top = [cx, cy - h * 2 / 3];
-  const bl = [cx - side / 2, cy + h / 3];
-  const br = [cx + side / 2, cy + h / 3];
+  // Bbox-centred: apex at top of viewBox, base at bottom.
+  const top = [cx, cy - h / 2];
+  const bl  = [cx - side / 2, cy + h / 2];
+  const br  = [cx + side / 2, cy + h / 2];
   const points = `${top.join(",")} ${bl.join(",")} ${br.join(",")}`;
 
   if (outerW > 0) {
     const t = document.createElementNS(SVG_NS, "polygon");
-    setAttrs(t, { points, ...strokeAttrs(outerW, "solid") });
+    setAttrs(t, { points, ...strokeAttrs(outerW, "solid"), "stroke-linejoin": "round" });
     root.appendChild(t);
   }
   if (innerStyle !== "none" && innerW > 0) {
+    // Shrink toward visual centroid, not bbox centre — keeps inner triangle
+    // visually concentric with outer one.
+    const cyc = cy - h / 2 + h * 2 / 3; // centroid Y = top + 2h/3
     const k = (side - offset * 2) / side;
-    const sh = (p) => [cx + (p[0] - cx) * k, cy + (p[1] - cy) * k];
+    const sh = (p) => [cx + (p[0] - cx) * k, cyc + (p[1] - cyc) * k];
     const innerP = [sh(top), sh(bl), sh(br)].map(p => p.join(",")).join(" ");
     const t = document.createElementNS(SVG_NS, "polygon");
-    setAttrs(t, { points: innerP, ...strokeAttrs(innerW, innerStyle) });
+    setAttrs(t, { points: innerP, ...strokeAttrs(innerW, innerStyle), "stroke-linejoin": "round" });
     root.appendChild(t);
   }
-  drawStackedLines(root, cx, cy);
+  // Text at centroid (visual centre of triangle), not bbox centre.
+  const textCy = cy - h / 2 + h * 2 / 3;
+  drawStackedLines(root, cx, textCy);
+  drawLogo(root, cx, textCy);
 }
 
 // ============================================================
@@ -775,18 +796,19 @@ function drawGuilloche(root, cx, cy, r) {
 // TEXT HELPERS
 // ============================================================
 
-function drawArcText(root, cx, cy, r, text, fontSize, letterSpacing, position, starMul, fontFamily) {
+function drawArcText(root, cx, cy, rx, text, fontSize, letterSpacing, position, starMul, fontFamily, ry) {
   if (!text) return;
+  if (ry === undefined) ry = rx; // default to circle
   const id = `arc-${position}-${Math.random().toString(36).slice(2, 8)}`;
   const path = document.createElementNS(SVG_NS, "path");
-  // Use a FULL circle as path so long text isn't clipped at semicircle endpoints.
+  // Use a FULL ellipse/circle as path so long text isn't clipped at endpoints.
   // - "top": start at bottom, sweep CW (sweep=1) → 50% lands on top, glyphs read upright with tops outward
   // - "bottom": start at top, sweep CCW (sweep=0) → 50% lands on bottom, glyphs read upright with tops inward
   let d;
   if (position === "top") {
-    d = `M ${cx} ${cy + r} A ${r} ${r} 0 0 1 ${cx} ${cy - r} A ${r} ${r} 0 0 1 ${cx} ${cy + r}`;
+    d = `M ${cx} ${cy + ry} A ${rx} ${ry} 0 0 1 ${cx} ${cy - ry} A ${rx} ${ry} 0 0 1 ${cx} ${cy + ry}`;
   } else {
-    d = `M ${cx} ${cy - r} A ${r} ${r} 0 0 0 ${cx} ${cy + r} A ${r} ${r} 0 0 0 ${cx} ${cy - r}`;
+    d = `M ${cx} ${cy - ry} A ${rx} ${ry} 0 0 0 ${cx} ${cy + ry} A ${rx} ${ry} 0 0 0 ${cx} ${cy - ry}`;
   }
   path.setAttribute("d", d);
   path.setAttribute("id", id);
@@ -1209,12 +1231,93 @@ function zoomFit() {
 }
 
 // ============================================================
+// CLICK-TO-EDIT — клік по елементу превʼю розкриває його секцію
+// ============================================================
+
+// Map data-section values → DOM <details> in the sidebar to scroll to.
+const SECTION_TARGETS = {
+  outerRing:    () => $("outerStyle")?.closest("details"),
+  ring2:        () => $("ring2Enabled")?.closest("details"),
+  innerRing:    () => $("innerRingStyle")?.closest("details"),
+  topArc:       () => $("topText")?.closest("details"),
+  bottomArc:    () => $("bottomText")?.closest("details"),
+  midArc:       () => $("midText")?.closest("details"),
+  centerLines:  () => $("centerLines")?.closest("details"),
+  logo:         () => $("logoFile")?.closest("details"),
+  guilloche:    () => $("guillochePattern")?.closest("details"),
+};
+
+function tagSvgForClickEdit(svg) {
+  // Walk through the rendered SVG and tag each shape with what it represents.
+  // Element order in buildSvg: guilloche bg → outer ring → ring2 → inner ring →
+  // arc texts (top, bottom, mid) → center text → logo group.
+  const root = svg.querySelector("g");
+  if (!root) return;
+  const kids = Array.from(root.children);
+  let circleIdx = 0;
+  let textIdx = 0;
+  for (const el of kids) {
+    const tag = el.tagName.toLowerCase();
+    if (tag === "circle" && el.getAttribute("fill") && el.getAttribute("fill").startsWith("url(")) {
+      el.dataset.section = "guilloche"; // pattern-filled bg
+    } else if (tag === "circle" || tag === "ellipse" || tag === "rect" || tag === "polygon") {
+      // First stroked shape = outer ring; second = ring2; third = inner ring
+      const sections = ["outerRing", "ring2", "innerRing"];
+      el.dataset.section = sections[Math.min(circleIdx, sections.length - 1)];
+      circleIdx++;
+    } else if (tag === "text") {
+      // Arc texts come first (top/bottom/mid), then stacked center lines
+      const tp = el.querySelector("textPath");
+      if (tp) {
+        const id = tp.getAttribute("href") || "";
+        if (id.includes("top")) el.dataset.section = "topArc";
+        else if (id.includes("bottom")) el.dataset.section = "bottomArc";
+        else el.dataset.section = "midArc";
+      } else {
+        el.dataset.section = "centerLines";
+      }
+      textIdx++;
+    } else if (tag === "g") {
+      // Logo group — always tagged
+      el.dataset.section = "logo";
+    } else if (tag === "polyline") {
+      // decorative inner-ring patterns (zigzag, rope, ...)
+      el.dataset.section = "innerRing";
+    }
+    el.classList.add("clickable");
+  }
+}
+
+function bindPreviewClicks() {
+  els.stage.addEventListener("click", (e) => {
+    let node = e.target;
+    while (node && node !== els.stage && !node.dataset?.section) {
+      node = node.parentNode;
+    }
+    if (!node || !node.dataset?.section) return;
+    const target = SECTION_TARGETS[node.dataset.section]?.();
+    if (!target) return;
+    // Open the details and any group above it
+    target.open = true;
+    // Scroll into view inside the controls panel
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+    // Flash a brief outline so user sees what was opened
+    target.classList.remove("flash");
+    void target.offsetWidth; // restart animation
+    target.classList.add("flash");
+  });
+}
+
+// ============================================================
 // RENDER
 // ============================================================
 function render() {
   els.stage.innerHTML = "";
   const svg = buildSvg();
   els.stage.appendChild(svg);
+  // Tag every visible element so a click in the preview opens (and scrolls
+  // to) the relevant sidebar section. Heuristic by tag + nesting position.
+  tagSvgForClickEdit(svg);
   applyZoom();
 
   // Paper / ruler toggles
@@ -2246,6 +2349,9 @@ function bind() {
     if (f) loadLogoFromFile(f);
   });
   els.logoClear.addEventListener("click", clearLogo);
+
+  // Click in preview → open the relevant sidebar section (Photoshop-style)
+  bindPreviewClicks();
 
   // Zoom controls
   els.zoomSlider.addEventListener("input", () => {
