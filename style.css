@@ -600,3 +600,51 @@ footer {
 .controls::-webkit-scrollbar-track, .preview-area::-webkit-scrollbar-track {
   background: var(--bg);
 }
+
+/* ===== SEO CONTENT ===== */
+.seo-content {
+  background: var(--bg, #f7f5ef);
+  border-top: 1px solid var(--border, #e0dccf);
+  padding: 32px 24px;
+  color: #2a2a2a;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.seo-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.seo-content h2 {
+  margin: 0 0 12px;
+  font-size: 22px;
+  color: #1a4fa3;
+}
+.seo-content h3 {
+  margin: 18px 0 8px;
+  font-size: 16px;
+  color: #1a1a1a;
+}
+.seo-content p, .seo-content ul { margin: 6px 0; }
+.seo-content ul { padding-left: 20px; }
+.seo-content li { margin: 3px 0; }
+.seo-content details {
+  margin: 6px 0;
+  padding: 8px 12px;
+  background: #fff;
+  border: 1px solid var(--border, #e0dccf);
+  border-radius: 6px;
+}
+.seo-content details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #1a4fa3;
+}
+.seo-content details[open] summary { margin-bottom: 6px; }
+.seo-meta {
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border, #e0dccf);
+  font-size: 13px;
+  color: #666;
+}
+.seo-meta a { color: #1a4fa3; }

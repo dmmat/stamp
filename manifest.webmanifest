@@ -1,0 +1,28 @@
+{
+  "name": "Генератор печаток — Україна",
+  "short_name": "Печатки",
+  "description": "Онлайн-генератор печаток і штампів за українськими стандартами. Експорт у SVG, PNG, DXF.",
+  "lang": "uk",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f7f5ef",
+  "theme_color": "#1a4fa3",
+  "categories": ["productivity", "business", "utilities", "graphics"],
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "og-image.png",
+      "type": "image/png",
+      "sizes": "1200x630",
+      "purpose": "any"
+    }
+  ]
+}

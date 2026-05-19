@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://dmat.pp.ua/stamp/</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dmat.pp.ua/stamp/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dmat.pp.ua/stamp/" />
+    <image:image>
+      <image:loc>https://dmat.pp.ua/stamp/og-image.png</image:loc>
+      <image:title>Генератор печаток онлайн — Україна</image:title>
+      <image:caption>Веб-генератор печаток за стандартами України: SVG, PNG, DXF</image:caption>
+    </image:image>
+  </url>
+</urlset>
