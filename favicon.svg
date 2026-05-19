@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <circle cx="32" cy="32" r="30" fill="none" stroke="#1a4fa3" stroke-width="3"/>
+  <circle cx="32" cy="32" r="25" fill="none" stroke="#1a4fa3" stroke-width="1.5"/>
+  <circle cx="32" cy="32" r="14" fill="none" stroke="#1a4fa3" stroke-width="1.5"/>
+  <path id="t" d="M 32 32 m -20 0 a 20 20 0 1 1 40 0" fill="none"/>
+  <text font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#1a4fa3" letter-spacing="1">
+    <textPath href="#t" startOffset="50%" text-anchor="middle">ПЕЧАТКА · УКРАЇНА</textPath>
+  </text>
+  <text x="32" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#1a4fa3">SVG</text>
+  <text x="32" y="38" text-anchor="middle" font-family="Arial, sans-serif" font-size="4" fill="#1a4fa3">PNG · DXF</text>
+</svg>
