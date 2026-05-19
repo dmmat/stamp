@@ -62,4 +62,4 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
-Sitemap: https://dmmat.github.io/stamp/sitemap.xml
+Sitemap: https://dmat.pp.ua/sitemap.xml
