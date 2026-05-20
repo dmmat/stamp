@@ -37,12 +37,19 @@ URL: https://dmat.pp.ua/stamp/
 - Пресети з `presets.json`, користувацькі — `presets.local.json` (ігнорується git)
 - Стан зберігається в localStorage
 
+## Структура
+
+- `/` — лендінг (презентація проєкту, опис, FAQ, SEO)
+- `/app/` — сам генератор печаток (UI і вся логіка)
+
 ## Ключові файли
 
-- `/index.html` — UI і всі контроли
-- `/app.js` — генератор SVG (вся логіка)
-- `/style.css` — стилі
-- `/presets.json` — публічні пресети
+- `/index.html` — лендінг
+- `/landing.css` — стилі лендінгу
+- `/app/index.html` — UI генератора і всі контроли
+- `/app/app.js` — генератор SVG (вся логіка)
+- `/app/style.css` — стилі генератора
+- `/app/presets.json` — публічні пресети
 - `/README.md` — документація
 
 ## Контакт
