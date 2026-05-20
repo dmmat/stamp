@@ -3,24 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Генератор печаток онлайн — Україна · SVG, PNG, DXF (круглі, овальні, прямокутні)</title>
-<meta name="description" content="Безкоштовний онлайн-генератор печаток і штампів за українськими стандартами: круглі (25–45 мм), овальні, прямокутні, трикутні. Експорт у SVG, PNG до 4800 dpi, DXF для AutoCAD і Fusion 360. Працює локально в браузері, без серверу і без передачі даних." />
-<meta name="keywords" content="генератор печаток, печатка онлайн, створити печатку, макет печатки, штамп онлайн, печатка Україна, печатка ФОП, печатка ТОВ, ЄДРПОУ, SVG печатка, DXF печатка, PNG печатка, гравіювання печатки, флеш-печатка, печатка для CNC, печатка макет безкоштовно, design stamp, ukrainian stamp generator" />
+<title>Генератор печаток онлайн — Україна · SVG, PNG, DXF безкоштовно</title>
+<meta name="description" content="Безкоштовний онлайн-генератор печаток і штампів за українськими стандартами: круглі, овальні, прямокутні, трикутні. Експорт у SVG, PNG до 4800 dpi, DXF для AutoCAD і Fusion 360. Усе працює локально в браузері, без серверу і без передачі даних." />
+<meta name="keywords" content="генератор печаток, печатка онлайн, створити печатку, макет печатки, штамп онлайн, печатка Україна, печатка ФОП, печатка ТОВ, ЄДРПОУ, SVG печатка, DXF печатка, PNG печатка, гравіювання печатки, флеш-печатка, печатка для CNC, печатка макет безкоштовно, ukrainian stamp generator" />
 <meta name="author" content="dmmat" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 <meta name="googlebot" content="index, follow, max-image-preview:large" />
 <meta name="bingbot" content="index, follow" />
 <meta name="language" content="Ukrainian" />
-<meta name="rating" content="general" />
-<meta name="distribution" content="global" />
-<meta name="revisit-after" content="14 days" />
 <meta name="theme-color" content="#1a4fa3" />
-<meta name="color-scheme" content="light dark" />
+<meta name="color-scheme" content="light" />
 <meta name="application-name" content="Генератор печаток" />
 <meta name="apple-mobile-web-app-title" content="Печатки" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="mobile-web-app-capable" content="yes" />
-<meta name="format-detection" content="telephone=no" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 
 <!-- AI / LLM crawler hints -->
@@ -34,12 +28,11 @@
 <link rel="alternate" hreflang="uk" href="https://dmat.pp.ua/stamp/" />
 <link rel="alternate" hreflang="x-default" href="https://dmat.pp.ua/stamp/" />
 
-<!-- Icons / PWA -->
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <link rel="apple-touch-icon" href="og-image.png" />
 <link rel="manifest" href="manifest.webmanifest" />
 
-<!-- Open Graph (Facebook, LinkedIn, Telegram, Viber, Discord, Slack) -->
+<!-- Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="uk_UA" />
 <meta property="og:site_name" content="Генератор печаток · Україна" />
@@ -53,27 +46,26 @@
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="Превʼю згенерованої круглої печатки за стандартами України" />
 
-<!-- Twitter / X Card -->
+<!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Генератор печаток онлайн — Україна" />
 <meta name="twitter:description" content="Створи макет печатки у браузері: SVG, PNG, DXF. Стандартні розміри. Локально, без серверу." />
 <meta name="twitter:image" content="https://dmat.pp.ua/stamp/og-image.png" />
 <meta name="twitter:image:alt" content="Превʼю згенерованої круглої печатки за стандартами України" />
 
-<!-- Discovery for AI agents -->
 <link rel="alternate" type="text/plain" title="llms.txt (AI-friendly summary)" href="llms.txt" />
 
-<!-- JSON-LD structured data: WebApplication + Organization + BreadcrumbList + FAQ -->
+<!-- JSON-LD -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebApplication",
-      "@id": "https://dmat.pp.ua/stamp/#webapp",
+      "@id": "https://dmat.pp.ua/stamp/app/#webapp",
       "name": "Генератор печаток",
       "alternateName": ["Stamp Generator", "Генератор печаток Україна"],
-      "url": "https://dmat.pp.ua/stamp/",
+      "url": "https://dmat.pp.ua/stamp/app/",
       "description": "Онлайн-генератор печаток і штампів за українськими стандартами. Експорт у SVG, PNG, DXF. Працює локально в браузері без серверу.",
       "applicationCategory": "DesignApplication",
       "applicationSubCategory": "VectorGraphicsEditor",
@@ -81,36 +73,25 @@
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
       "inLanguage": "uk",
       "isAccessibleForFree": true,
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "UAH"
-      },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "UAH" },
       "featureList": [
         "Круглі печатки 25, 30, 38, 40, 42, 45 мм",
         "Овальні печатки 50×35, 55×35, 60×40 мм",
         "Прямокутні штампи 50×20, 60×25, 70×30 мм",
         "Трикутні печатки 45, 50 мм",
         "До 3 кілець з настроюваним діаметром і товщиною",
-        "Декоративні візерунки кілець (пунктир, меандр, ланцюг, мотузка, плетіння)",
-        "Захисні фонові узори (гільош)",
+        "Декоративні візерунки кілець і захисні узори (гільош)",
         "Текст по дугах (верх, низ, середина)",
         "Експорт SVG, PNG до 4800 dpi, DXF (AutoCAD R12)",
         "Конвертація тексту у криві (opentype.js)",
-        "Імпорт/експорт JSON для збереження пресетів",
+        "Імпорт/експорт JSON",
         "Локальна робота без серверу"
       ],
       "screenshot": "https://dmat.pp.ua/stamp/og-image.png",
       "softwareVersion": "1.0",
       "license": "https://opensource.org/licenses/MIT",
-      "author": {
-        "@type": "Person",
-        "name": "dmmat",
-        "url": "https://github.com/dmmat"
-      },
-      "publisher": {
-        "@id": "https://dmat.pp.ua/stamp/#publisher"
-      }
+      "author": { "@type": "Person", "name": "dmmat", "url": "https://github.com/dmmat" },
+      "publisher": { "@id": "https://dmat.pp.ua/stamp/#publisher" }
     },
     {
       "@type": "Organization",
@@ -132,544 +113,226 @@
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Головна", "item": "https://dmat.pp.ua/stamp/" }
       ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Чи безпечно створювати макет печатки в цьому генераторі?", "acceptedAnswer": { "@type": "Answer", "text": "Так. Застосунок повністю клієнтський: ніякі дані не відправляються на сервер. Уся генерація відбувається у вашому браузері локально, а файл (SVG / PNG / DXF) формується на вашому пристрої." } },
+        { "@type": "Question", "name": "Які формати експорту підтримуються?", "acceptedAnswer": { "@type": "Answer", "text": "SVG (векторний, у реальних міліметрах), PNG (300, 600, 1200, 2400, 4800 dpi), DXF (AutoCAD R12 ASCII для Fusion 360 / AutoCAD) і JSON для збереження налаштувань." } },
+        { "@type": "Question", "name": "Які стандартні розміри печаток в Україні підтримуються?", "acceptedAnswer": { "@type": "Answer", "text": "Круглі 25, 30, 38, 40, 42, 45 мм; овальні 50×35, 55×35, 60×40 мм; прямокутні штампи 50×20, 60×25, 70×30 мм; трикутні 45 і 50 мм." } },
+        { "@type": "Question", "name": "Чи потрібна реєстрація або оплата?", "acceptedAnswer": { "@type": "Answer", "text": "Ні. Сервіс безкоштовний, без реєстрації, без обмежень кількості генерацій. Код відкритий за ліцензією MIT." } },
+        { "@type": "Question", "name": "Чи можна використовувати макет для виготовлення на лазері або флеш-машині?", "acceptedAnswer": { "@type": "Answer", "text": "Так. Експорт у DXF (AutoCAD R12) та SVG з конвертацією тексту в криві спеціально передбачений для CNC, лазерного гравіювання, флеш-машин і фотополімерних установок." } }
+      ]
     }
   ]
 }
 </script>
 
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="landing.css" />
 </head>
 <body>
-<header>
-  <div class="header-inner">
-    <div class="header-title">
-      <h1>Генератор печаток</h1>
-      <p class="subtitle">Україна · стандартні розміри · SVG / PNG / DXF</p>
-    </div>
-    <nav class="menubar">
-      <div class="menu" data-menu="file">
-        <button class="menu-trigger" type="button">Файл</button>
-        <ul class="menu-dropdown" role="menu">
-          <li class="menu-section">У браузері (швидко)</li>
-          <li><button class="menu-item" id="saveAsUserPreset" type="button"><span class="mi-icon">★</span>Зберегти як пресет…</button></li>
-          <li><button class="menu-item" id="deleteUserPreset" type="button"><span class="mi-icon">🗑</span>Видалити пресет з браузера…</button></li>
-          <li class="separator"></li>
-          <li class="menu-section">Файл</li>
-          <li><button class="menu-item" id="importJson" type="button"><span class="mi-icon">📂</span>Завантажити JSON…</button></li>
-          <li><button class="menu-item" id="exportJson" type="button"><span class="mi-icon">💾</span>Зберегти JSON</button></li>
-          <li><button class="menu-item" id="copySvg" type="button"><span class="mi-icon">📋</span>Скопіювати SVG в буфер</button></li>
-          <li class="separator"></li>
-          <li><button class="menu-item" id="resetBtn" type="button"><span class="mi-icon">↺</span>Скинути все</button></li>
-          <li class="menu-info">Стан печатки авто-зберігається в браузері при кожній зміні</li>
-        </ul>
-      </div>
 
-      <div class="menu" data-menu="export">
-        <button class="menu-trigger" type="button">Експорт</button>
-        <ul class="menu-dropdown" role="menu">
-          <li class="menu-section">Векторні (друк / гравіювання)</li>
-          <li><button class="menu-item" id="exportSvg" type="button"><span class="mi-icon">⬇</span>SVG (Inkscape, браузер, веб)</button></li>
-          <li><button class="menu-item" id="exportDxf" type="button" title="AutoCAD R12 ASCII"><span class="mi-icon">⬇</span>DXF (Fusion 360, AutoCAD, CAD)</button></li>
-          <li class="separator"></li>
-          <li class="menu-section">PNG (растр)</li>
-          <li><button class="menu-item png-item" data-dpi="300" type="button"><span class="mi-icon">🖼</span>PNG · 300 dpi <span class="mi-hint">(перегляд)</span></button></li>
-          <li><button class="menu-item png-item" data-dpi="600" type="button"><span class="mi-icon">🖼</span>PNG · 600 dpi <span class="mi-hint">(друк)</span></button></li>
-          <li><button class="menu-item png-item" data-dpi="1200" type="button"><span class="mi-icon">🖼</span>PNG · 1200 dpi <span class="mi-hint">(якісний друк)</span></button></li>
-          <li><button class="menu-item png-item" data-dpi="2400" type="button"><span class="mi-icon">🖼</span>PNG · 2400 dpi <span class="mi-hint">(гравіювання)</span></button></li>
-          <li><button class="menu-item png-item" data-dpi="4800" type="button"><span class="mi-icon">🖼</span>PNG · 4800 dpi <span class="mi-hint">(максимум)</span></button></li>
-        </ul>
-      </div>
-
-      <div class="menu" data-menu="settings">
-        <button class="menu-trigger" type="button">Налаштування</button>
-        <ul class="menu-dropdown" role="menu">
-          <li>
-            <label class="menu-toggle">
-              <input type="checkbox" id="exportAsCurves" />
-              <span>Текст → криві <span class="mi-hint">(для CAD/CNC)</span></span>
-            </label>
-          </li>
-          <li class="separator"></li>
-          <li class="menu-section">Підказки</li>
-          <li class="menu-info">SVG — масштаб уже сумісний з Fusion 360</li>
-          <li class="menu-info">DXF завжди експортується у криві</li>
-          <li class="menu-info">PNG — обери DPI у меню «Експорт»</li>
-        </ul>
-      </div>
-
-      <input type="file" id="importJsonFile" accept=".json,application/json" style="display:none;" />
+<header class="lp-header">
+  <div class="wrap">
+    <a class="brand" href="./">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="30" fill="none" stroke="#1a4fa3" stroke-width="3"/>
+        <circle cx="32" cy="32" r="22" fill="none" stroke="#1a4fa3" stroke-width="1.5"/>
+        <text x="32" y="30" text-anchor="middle" font-family="Arial" font-size="7" font-weight="bold" fill="#1a4fa3">SVG</text>
+        <text x="32" y="40" text-anchor="middle" font-family="Arial" font-size="5" fill="#1a4fa3">DXF</text>
+      </svg>
+      Генератор печаток
+    </a>
+    <nav class="lp-nav">
+      <a href="#features">Можливості</a>
+      <a href="#formats">Формати</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn" href="app/">Відкрити генератор</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <!-- ========== SIDEBAR ========== -->
-  <aside class="controls">
-
-    <h2 class="group-title">⚙️ Геометрія</h2>
-
-    <details open>
-      <summary>📐 Форма та розмір</summary>
-      <div class="grid-2">
-        <label>Форма
-          <select id="shape">
-            <option value="circle">Кругла</option>
-            <option value="ellipse">Овальна</option>
-            <option value="rect">Прямокутна</option>
-            <option value="triangle">Трикутна</option>
-          </select>
-        </label>
-        <label>Розмір
-          <select id="size">
-            <option data-shape="circle" value="38">Ø 38 мм (стандарт)</option>
-            <option data-shape="circle" value="40">Ø 40 мм</option>
-            <option data-shape="circle" value="42">Ø 42 мм</option>
-            <option data-shape="circle" value="45">Ø 45 мм</option>
-            <option data-shape="circle" value="30">Ø 30 мм</option>
-            <option data-shape="circle" value="25">Ø 25 мм</option>
-            <option data-shape="ellipse" value="50x35">50 × 35 мм</option>
-            <option data-shape="ellipse" value="55x35">55 × 35 мм</option>
-            <option data-shape="ellipse" value="60x40">60 × 40 мм</option>
-            <option data-shape="rect" value="60x25">60 × 25 мм</option>
-            <option data-shape="rect" value="70x30">70 × 30 мм</option>
-            <option data-shape="rect" value="50x20">50 × 20 мм</option>
-            <option data-shape="triangle" value="45">45 мм</option>
-            <option data-shape="triangle" value="50">50 мм</option>
-          </select>
-        </label>
-        <label>Колір
-          <input type="color" id="color" value="#1a4fa3" />
-        </label>
-        <label>Гарнітура
-          <select id="font">
-            <option value="Arial, sans-serif">Arial</option>
-            <option value="'Times New Roman', serif">Times New Roman</option>
-            <option value="'Courier New', monospace">Courier New</option>
-            <option value="Verdana, sans-serif">Verdana</option>
-            <option value="Tahoma, sans-serif">Tahoma</option>
-            <option value="Georgia, serif">Georgia</option>
-            <option value="'PT Sans', sans-serif">PT Sans</option>
-            <option value="'PT Serif', serif">PT Serif</option>
-          </select>
-        </label>
-        <label>Жирність
-          <select id="weight">
-            <option value="normal">Звичайний</option>
-            <option value="bold" selected>Жирний</option>
-          </select>
-        </label>
-        <label>Регістр
-          <select id="case">
-            <option value="normal" selected>Як введено</option>
-            <option value="upper">ВЕЛИКІ</option>
-          </select>
-        </label>
-      </div>
-      <label class="preset-row">Готовий пресет
-        <select id="preset">
-          <option value="">— оберіть для авто-заповнення —</option>
-        </select>
-      </label>
-    </details>
-
-    <h2 class="group-title" data-shape="circle ellipse">✍️ Текст по дугах</h2>
-
-    <details open data-shape="circle ellipse">
-      <summary>🔝 Верхня дуга</summary>
-      <label>Текст <span class="hint-inline">— символ <code>*</code> рендериться більшим</span>
-        <input type="text" id="topText" value="ТОВ «ПРИКЛАД»" />
-      </label>
-      <div class="grid-3">
-        <label>Розмір (мм)
-          <input type="number" id="topSize" value="2.6" step="0.1" min="1" max="6" />
-        </label>
-        <label>Інтервал
-          <input type="number" id="topSpacing" value="0.3" step="0.05" min="-1" max="3" />
-        </label>
-        <label>Зсув (мм)
-          <input type="number" id="topOffset" value="0" step="0.2" min="-10" max="10" />
-        </label>
-      </div>
-      <label>Множник для <code>*</code>
-        <input type="number" id="topStarMul" value="1.6" step="0.1" min="1" max="3" />
-      </label>
-      <label>Шрифт верхньої дуги
-        <select id="topFont">
-          <option value="">— як основний —</option>
-          <option value="Arial, sans-serif">Arial</option>
-          <option value="'Arial Narrow', Arial, sans-serif">Arial Narrow</option>
-          <option value="'Arial Black', Arial, sans-serif">Arial Black</option>
-          <option value="'Times New Roman', serif">Times New Roman</option>
-          <option value="Georgia, serif">Georgia</option>
-          <option value="'Courier New', monospace">Courier New</option>
-          <option value="Verdana, sans-serif">Verdana</option>
-          <option value="Tahoma, sans-serif">Tahoma</option>
-          <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
-          <option value="Impact, sans-serif">Impact</option>
-          <option value="'Antonio', Impact, sans-serif">Antonio (близько до Impact, є bold)</option>
-          <option value="'Oswald', Impact, sans-serif">Oswald (display, є italic-фейк)</option>
-          <option value="'Bebas Neue', Impact, sans-serif">Bebas Neue (тільки Regular)</option>
-          <option value="'Anton', Impact, sans-serif">Anton (тільки Regular, дуже жирний)</option>
-          <option value="'PT Sans', sans-serif">PT Sans</option>
-          <option value="'PT Serif', serif">PT Serif</option>
-        </select>
-      </label>
-    </details>
-
-    <details open data-shape="circle ellipse">
-      <summary>🔽 Нижня дуга</summary>
-      <label>Текст <span class="hint-inline">— символ <code>*</code> рендериться більшим</span>
-        <input type="text" id="bottomText" value="ЄДРПОУ 12345678 · м. КИЇВ" />
-      </label>
-      <div class="grid-3">
-        <label>Розмір (мм)
-          <input type="number" id="bottomSize" value="1.8" step="0.1" min="1" max="6" />
-        </label>
-        <label>Інтервал
-          <input type="number" id="bottomSpacing" value="0.15" step="0.05" min="-1" max="3" />
-        </label>
-        <label>Зсув (мм)
-          <input type="number" id="bottomOffset" value="0" step="0.2" min="-10" max="10" />
-        </label>
-      </div>
-      <label>Шрифт нижньої дуги
-        <select id="bottomFont">
-          <option value="">— як основний —</option>
-          <option value="Arial, sans-serif">Arial</option>
-          <option value="'Arial Narrow', Arial, sans-serif">Arial Narrow</option>
-          <option value="'Arial Black', Arial, sans-serif">Arial Black</option>
-          <option value="'Times New Roman', serif">Times New Roman</option>
-          <option value="Georgia, serif">Georgia</option>
-          <option value="'Courier New', monospace">Courier New</option>
-          <option value="Verdana, sans-serif">Verdana</option>
-          <option value="Tahoma, sans-serif">Tahoma</option>
-          <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
-          <option value="Impact, sans-serif">Impact</option>
-          <option value="'Antonio', Impact, sans-serif">Antonio (близько до Impact, є bold)</option>
-          <option value="'Oswald', Impact, sans-serif">Oswald (display, є italic-фейк)</option>
-          <option value="'Bebas Neue', Impact, sans-serif">Bebas Neue (тільки Regular)</option>
-          <option value="'Anton', Impact, sans-serif">Anton (тільки Regular, дуже жирний)</option>
-          <option value="'PT Sans', sans-serif">PT Sans</option>
-          <option value="'PT Serif', serif">PT Serif</option>
-        </select>
-      </label>
-    </details>
-
-    <details data-shape="circle">
-      <summary>↘ Середня дуга (під центром, напр. «Код …»)</summary>
-      <label>Текст
-        <input type="text" id="midText" value="" />
-      </label>
-      <div class="grid-3">
-        <label>Розмір (мм)
-          <input type="number" id="midSize" value="1.7" step="0.1" min="1" max="5" />
-        </label>
-        <label>Діаметр (мм)
-          <input type="number" id="midRadius" value="24" step="0.5" min="3" max="50" />
-        </label>
-        <label>Положення
-          <select id="midPos">
-            <option value="bottom">Знизу</option>
-            <option value="top">Зверху</option>
-          </select>
-        </label>
-      </div>
-      <div class="grid-2">
-        <label>Інтервал
-          <input type="number" id="midSpacing" value="0.1" step="0.05" min="-1" max="3" />
-        </label>
-        <label>Зсув (мм)
-          <input type="number" id="midOffset" value="0" step="0.2" min="-10" max="10" />
-        </label>
-      </div>
-      <label>Шрифт
-        <select id="midFont">
-          <option value="">— як основний —</option>
-          <option value="Arial, sans-serif">Arial</option>
-          <option value="'Arial Narrow', Arial, sans-serif">Arial Narrow</option>
-          <option value="'Times New Roman', serif">Times New Roman</option>
-          <option value="Georgia, serif">Georgia</option>
-          <option value="'Courier New', monospace">Courier New</option>
-          <option value="Verdana, sans-serif">Verdana</option>
-          <option value="Tahoma, sans-serif">Tahoma</option>
-          <option value="Impact, sans-serif">Impact</option>
-          <option value="'Antonio', Impact, sans-serif">Antonio</option>
-          <option value="'Oswald', Impact, sans-serif">Oswald</option>
-          <option value="'Bebas Neue', Impact, sans-serif">Bebas Neue</option>
-          <option value="'Anton', Impact, sans-serif">Anton</option>
-          <option value="'PT Sans', sans-serif">PT Sans</option>
-        </select>
-      </label>
-    </details>
-
-    <details open>
-      <summary>📝 Центральний блок</summary>
-      <div class="center-globals">
-        <div class="grid-2">
-          <label>Висота рядка (×шрифт)
-            <input type="number" id="lineSpacing" value="1.18" step="0.02" min="0.9" max="2.5" />
-          </label>
-          <label>Зсув по Y (мм)
-            <input type="number" id="centerYOffset" value="0" step="0.2" min="-15" max="15" />
-          </label>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="eyebrow">★ Україна · стандартні розміри</span>
+        <h1>Створи <span class="accent">макет печатки</span> онлайн за хвилину</h1>
+        <p class="lead">
+          Круглі, овальні, прямокутні та трикутні печатки за українськими стандартами.
+          Експорт у SVG, PNG і DXF — усе локально у браузері, без серверу й передачі даних.
+        </p>
+        <div class="hero-cta">
+          <a class="btn lg" href="app/">🖋 Відкрити генератор</a>
+          <a class="btn ghost lg" href="#features">Як це працює</a>
+        </div>
+        <div class="hero-note">
+          <span><i class="dot"></i> Безкоштовно, без реєстрації</span>
+          <span><i class="dot"></i> Дані не залишають браузер</span>
+          <span><i class="dot"></i> Відкритий код (MIT)</span>
         </div>
       </div>
-      <div class="center-lines-label">Рядки тексту</div>
-      <div id="centerLines"></div>
-      <button id="addLine" class="full">+ Додати рядок</button>
-    </details>
 
-    <h2 class="group-title">🔗 Кільця</h2>
-
-    <details open>
-      <summary>⭕ Зовнішнє кільце (основне)</summary>
-      <label>Стиль
-        <select id="outerStyle">
-          <option value="solid">№ 01 — суцільне</option>
-          <option value="thin">№ 02 — тонке</option>
-          <option value="double">№ 03 — подвійне</option>
-          <option value="text">№ 04 — з текстом-візерунком</option>
-        </select>
-      </label>
-      <label>Товщина (мм)
-        <input type="number" id="outerWidth" value="1.0" step="0.05" min="0" max="3" />
-      </label>
-      <label id="outerPatternTextLabel" style="display:none;">Текст-візерунок (повторюватиметься)
-        <input type="text" id="outerPatternText" value="* ЗРАЗОК * ПЕЧАТКА *" />
-      </label>
-    </details>
-
-    <details open data-shape="circle">
-      <summary>◯ Друге кільце (тонке, біля зовнішнього)</summary>
-      <label>
-        <input type="checkbox" id="ring2Enabled" checked />
-        Увімкнути друге кільце
-      </label>
-      <div class="grid-2">
-        <label>Діаметр (мм)
-          <input type="number" id="ring2Diameter" value="36" step="0.5" min="5" max="100" />
-        </label>
-        <label>Товщина (мм)
-          <input type="number" id="ring2Width" value="0.5" step="0.05" min="0" max="2" />
-        </label>
-      </div>
-      <label>Стиль
-        <select id="ring2Style">
-          <option value="solid">Суцільна</option>
-          <option value="dashed">Пунктир</option>
-        </select>
-      </label>
-    </details>
-
-    <details open>
-      <summary>🌀 Внутрішнє кільце</summary>
-      <label>Стиль
-        <select id="innerRingStyle">
-          <option value="none">— без —</option>
-          <option value="simple" selected>№ 00 — просте кільце</option>
-          <option value="dashed">№ 01 — пунктир</option>
-          <option value="zigzag">№ 02 — зигзаг</option>
-          <option value="meander">№ 03 — меандр (грецький)</option>
-          <option value="chain">№ 04 — ланцюг</option>
-          <option value="rope">№ 05 — мотузка</option>
-          <option value="braid">№ 06 — плетіння</option>
-          <option value="cable">№ 07 — кабель</option>
-          <option value="dots">№ 08 — крапки</option>
-        </select>
-      </label>
-      <div class="grid-2">
-        <label>Діаметр (мм)
-          <input type="number" id="innerDiameter" value="28" step="0.5" min="5" max="100" />
-        </label>
-        <label>Товщина (мм)
-          <input type="number" id="innerWidth" value="0.5" step="0.05" min="0" max="2" />
-        </label>
-      </div>
-      <label>Висота візерунка (мм)
-        <input type="number" id="innerPatternHeight" value="1.2" step="0.1" min="0.3" max="4" />
-      </label>
-    </details>
-
-    <h2 class="group-title">🎨 Декор</h2>
-
-    <details data-shape="circle ellipse">
-      <summary>🛡 Захисний узор (гільош)</summary>
-      <label>Узор
-        <select id="guillochePattern">
-          <option value="none">— без узору —</option>
-          <option value="dots">№ 01 — крапки</option>
-          <option value="dotsDense">№ 02 — щільні крапки</option>
-          <option value="diagonal">№ 03 — діагональ</option>
-          <option value="crosshatch">№ 04 — сітка</option>
-          <option value="waves">№ 05 — хвилі</option>
-          <option value="mesh">№ 06 — кружки</option>
-          <option value="weave">№ 07 — плетіння</option>
-          <option value="moire">№ 08 — муар</option>
-        </select>
-      </label>
-      <label>Прозорість
-        <input type="range" id="guillocheOpacity" min="5" max="100" value="20" />
-      </label>
-      <label>Щільність
-        <input type="range" id="guillocheDensity" min="20" max="200" value="100" />
-      </label>
-    </details>
-
-    <details>
-      <summary>💧 Реалістичність</summary>
-      <label>
-        <input type="checkbox" id="distress" />
-        Ефект потертості (нерівний відбиток)
-      </label>
-      <label>Інтенсивність потертості
-        <input type="range" id="distressLevel" min="0" max="100" value="40" />
-      </label>
-    </details>
-
-    <h2 class="group-title">🖼 Лого та звірка</h2>
-
-    <details>
-      <summary>🎯 Лого в центрі (SVG)</summary>
-      <label>Завантажити SVG лого
-        <input type="file" id="logoFile" accept=".svg,image/svg+xml" />
-      </label>
-      <div class="logo-actions">
-        <button id="logoClear" type="button">🗑 Прибрати</button>
-        <span id="logoFileName" class="logo-filename">— не вибрано —</span>
-      </div>
-      <label>
-        <input type="checkbox" id="logoEnabled" />
-        Показувати лого
-      </label>
-      <label>Розмір (мм)
-        <input type="range" id="logoSize" min="2" max="40" step="0.5" value="10" />
-      </label>
-      <div class="grid-2">
-        <label>X (мм)
-          <input type="number" id="logoX" value="0" step="0.2" />
-        </label>
-        <label>Y (мм)
-          <input type="number" id="logoY" value="0" step="0.2" />
-        </label>
-      </div>
-      <label>Поворот (°)
-        <input type="range" id="logoRotate" min="-180" max="180" value="0" />
-      </label>
-      <label>
-        <input type="checkbox" id="logoTint" checked />
-        Перефарбувати у колір печатки
-      </label>
-      <input type="hidden" id="showStars" />
-      <input type="hidden" id="separator" value="*" />
-    </details>
-
-    <details>
-      <summary>📷 Підкладка з фотографією</summary>
-      <label>Завантажити фото
-        <input type="file" id="bgFile" accept="image/*" />
-      </label>
-      <button id="bgClear" class="full" style="margin-top:6px;">Прибрати фото</button>
-      <label>Прозорість
-        <input type="range" id="bgOpacity" min="0" max="100" value="60" />
-      </label>
-      <label>Масштаб (%)
-        <input type="range" id="bgScale" min="10" max="500" value="100" />
-      </label>
-      <div class="grid-2">
-        <label>X (мм)
-          <input type="number" id="bgX" value="0" step="0.5" />
-        </label>
-        <label>Y (мм)
-          <input type="number" id="bgY" value="0" step="0.5" />
-        </label>
-      </div>
-      <label>Поворот (°)
-        <input type="range" id="bgRotate" min="-180" max="180" value="0" />
-      </label>
-      <label>
-        <input type="checkbox" id="bgOnTop" />
-        Над печаткою (інакше — під)
-      </label>
-      <p class="hint" style="background:none;border:none;padding:0;margin:8px 0 0;">
-        💡 Утримуй <kbd>Shift</kbd> і тягни мишкою по фото — щоб переміщувати.
-      </p>
-    </details>
-
-  </aside>
-
-  <!-- ========== PREVIEW ========== -->
-  <section class="preview">
-    <div class="preview-toolbar">
-      <button class="zoom-btn" id="zoomOut" title="Зменшити">−</button>
-      <input type="range" id="zoomSlider" min="50" max="600" value="200" step="10" />
-      <button class="zoom-btn" id="zoomIn" title="Збільшити">+</button>
-      <span class="zoom-label" id="zoomLabel">200%</span>
-      <span class="sep"></span>
-      <button class="zoom-btn" id="zoomFit" title="Підігнати">⤢ Fit</button>
-      <button class="zoom-btn" id="zoom100" title="100%">1:1</button>
-      <span class="sep"></span>
-      <label class="bg-toggle">
-        <input type="checkbox" id="showPaper" checked /> Папір
-      </label>
-      <label class="bg-toggle">
-        <input type="checkbox" id="showRuler" /> Лінійка
-      </label>
-    </div>
-    <div class="preview-area" id="previewArea">
-      <div class="preview-canvas" id="previewCanvas">
-        <img id="bgImage" alt="" />
-        <div id="stage"></div>
+      <div class="stamp-stage">
+        <svg class="hero-stamp" viewBox="0 0 200 200" role="img" aria-label="Анімована кругла печатка">
+          <defs>
+            <path id="ringTop" d="M 100 100 m -78 0 a 78 78 0 1 1 156 0" />
+            <path id="ringBottom" d="M 100 100 m -72 0 a 72 72 0 1 0 144 0" />
+          </defs>
+          <circle cx="100" cy="100" r="92" fill="none" stroke="#1a4fa3" stroke-width="4"/>
+          <circle cx="100" cy="100" r="82" fill="none" stroke="#1a4fa3" stroke-width="1.6"/>
+          <circle cx="100" cy="100" r="46" fill="none" stroke="#1a4fa3" stroke-width="1.6"/>
+          <g class="ring-text" fill="#1a4fa3" font-family="Arial, sans-serif" font-weight="bold">
+            <text font-size="12.5" letter-spacing="2"><textPath href="#ringTop" startOffset="50%" text-anchor="middle">ГЕНЕРАТОР  ПЕЧАТОК</textPath></text>
+            <text font-size="11" letter-spacing="2"><textPath href="#ringBottom" startOffset="50%" text-anchor="middle">★  УКРАЇНА  ★</textPath></text>
+          </g>
+          <text x="100" y="96" text-anchor="middle" fill="#1a4fa3" font-family="Arial, sans-serif" font-size="22" font-weight="bold">SVG</text>
+          <text x="100" y="116" text-anchor="middle" fill="#1a4fa3" font-family="Arial, sans-serif" font-size="12">PNG · DXF</text>
+        </svg>
       </div>
     </div>
-    <p class="hint" id="dimsLabel">—</p>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="section-pad">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Можливості</span>
+        <h2>Усе для професійного макета</h2>
+        <p>Гнучкий конструктор: кільця, дугові написи, центральний блок, захисні візерунки й точні розміри в міліметрах.</p>
+      </div>
+      <div class="grid features">
+        <article class="card reveal"><span class="ic">⭕</span><h3>Кільця та рамки</h3><p>До трьох концентричних кілець із власним діаметром і товщиною; рамки для штампів.</p></article>
+        <article class="card reveal d1"><span class="ic">🔤</span><h3>Текст по дугах</h3><p>Верхній, нижній і середній написи (наприклад «Код ЄДРПОУ») з окремим шрифтом кожен.</p></article>
+        <article class="card reveal d2"><span class="ic">🎚️</span><h3>Центральний блок</h3><p>До 6 рядків зі своїм шрифтом, жирністю, курсивом і розміром.</p></article>
+        <article class="card reveal"><span class="ic">🛡️</span><h3>Захисні узори</h3><p>Гільош і декоративні візерунки кілець: меандр, ланцюг, мотузка, плетіння, хвилі, муар.</p></article>
+        <article class="card reveal d1"><span class="ic">📐</span><h3>Точні міліметри</h3><p>SVG рендериться в реальному розмірі (mm) — друк і гравіювання без масштабування.</p></article>
+        <article class="card reveal d2"><span class="ic">📷</span><h3>Звірка з відбитком</h3><p>Підкладка з фото реальної печатки: перетягування, масштаб, поворот, прозорість.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHAPES -->
+  <section id="shapes" class="section-pad band">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Форми та розміри</span>
+        <h2>Стандартні формати України</h2>
+        <p>Готові розміри для ТОВ, ФОП, нотаріусів, лікарів і кутових штампів.</p>
+      </div>
+      <div class="grid shapes">
+        <div class="shape-card reveal">
+          <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4"><circle cx="50" cy="50" r="42"/><circle cx="50" cy="50" r="32"/></svg>
+          <h3>Круглі</h3><p>25 · 30 · 38 · 40 · 42 · 45 мм</p>
+        </div>
+        <div class="shape-card reveal d1">
+          <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4"><ellipse cx="50" cy="50" rx="44" ry="30"/><ellipse cx="50" cy="50" rx="34" ry="21"/></svg>
+          <h3>Овальні</h3><p>50×35 · 55×35 · 60×40 мм</p>
+        </div>
+        <div class="shape-card reveal d2">
+          <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4"><rect x="10" y="28" width="80" height="44" rx="4"/><rect x="18" y="36" width="64" height="28" rx="2"/></svg>
+          <h3>Прямокутні</h3><p>50×20 · 60×25 · 70×30 мм</p>
+        </div>
+        <div class="shape-card reveal d3">
+          <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"><path d="M50 14 L88 80 H12 Z"/></svg>
+          <h3>Трикутні</h3><p>45 · 50 мм</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMATS -->
+  <section id="formats" class="section-pad">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Експорт</span>
+        <h2>Формати для друку, веба і CAD</h2>
+        <p>Один макет — будь-який вихідний формат для виробництва чи онлайну.</p>
+      </div>
+      <div class="grid formats">
+        <div class="fmt card reveal"><div class="tag">SVG</div><p>Вектор у мм. Inkscape, CorelDraw, браузер.</p></div>
+        <div class="fmt card reveal d1"><div class="tag">PNG</div><p>300 · 600 · 1200 · 2400 · 4800 dpi.</p></div>
+        <div class="fmt card reveal d2"><div class="tag">DXF</div><p>AutoCAD R12 · Fusion 360 · лазер, CNC.</p></div>
+        <div class="fmt card reveal d3"><div class="tag">JSON</div><p>Збереження та відновлення пресету.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section class="section-pad band">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Як це працює</span>
+        <h2>Три кроки до готового макета</h2>
+      </div>
+      <div class="grid steps">
+        <div class="step reveal"><h3>Оберіть форму та розмір</h3><p>Кругла, овальна, прямокутна чи трикутна — стандартні розміри вже налаштовані.</p></div>
+        <div class="step reveal d1"><h3>Введіть тексти</h3><p>Назва, ЄДРПОУ, місто, додаткові рядки. Налаштуйте шрифти, кільця й візерунки.</p></div>
+        <div class="step reveal d2"><h3>Експортуйте</h3><p>SVG, PNG, DXF або JSON — одним кліком, прямо з браузера.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section-pad">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">FAQ</span>
+        <h2>Часті питання</h2>
+      </div>
+      <div class="faq reveal">
+        <details>
+          <summary>Чи безпечно створювати макет печатки у цьому генераторі?</summary>
+          <p>Так. Застосунок повністю клієнтський: нічого не відправляється на сервер, генерація відбувається у вашому браузері, а файл (SVG / PNG / DXF) формується на вашому пристрої.</p>
+        </details>
+        <details>
+          <summary>Які формати експорту підтримуються?</summary>
+          <p>SVG (у реальних міліметрах), PNG (300, 600, 1200, 2400, 4800 dpi), DXF (AutoCAD R12 ASCII для Fusion 360 / AutoCAD) і JSON для збереження налаштувань.</p>
+        </details>
+        <details>
+          <summary>Які стандартні розміри печаток в Україні підтримуються?</summary>
+          <p>Круглі 25, 30, 38, 40, 42, 45 мм; овальні 50×35, 55×35, 60×40 мм; прямокутні штампи 50×20, 60×25, 70×30 мм; трикутні 45 і 50 мм.</p>
+        </details>
+        <details>
+          <summary>Чи підходить експорт для лазерного гравіювання, флеш-машини, фотополімеру?</summary>
+          <p>Так. Окрім SVG є експорт у DXF (AutoCAD R12 ASCII) і опція «Текст → криві», які покривають типові вимоги CNC, лазерів і флеш-обладнання.</p>
+        </details>
+        <details>
+          <summary>Чи потрібна реєстрація або оплата?</summary>
+          <p>Ні. Сервіс безкоштовний, без реєстрації, без обмежень. Вихідний код відкритий за ліцензією MIT.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="cta-band band">
+    <div class="wrap reveal">
+      <h2>Готові зробити свою печатку?</h2>
+      <p>Відкрийте конструктор і отримайте готовий векторний макет за лічені хвилини.</p>
+      <a class="btn lg" href="app/">🖋 Відкрити генератор печаток</a>
+    </div>
   </section>
 </main>
 
-<footer>
-  Локально, без серверу. Жодних даних не передається назовні.
-  · <a href="about.html">Про застосунок та FAQ</a>
+<footer class="lp-footer">
+  <div class="wrap">
+    <p>© <span id="year">2026</span> Генератор печаток · Локально, без серверу. Жодних даних не передається назовні.</p>
+    <p><a href="app/">Генератор</a> · <a href="https://github.com/dmmat/stamp" rel="noopener">GitHub</a> · Ліцензія MIT</p>
+  </div>
 </footer>
 
-<template id="line-row-template">
-  <div class="line-row">
-    <input type="text" class="line-text" placeholder="Текст рядка" />
-    <div class="line-controls">
-      <input type="number" class="line-size" value="2.0" step="0.1" min="0.5" max="10" title="Розмір (мм)" placeholder="мм" />
-      <select class="line-weight" title="Жирність">
-        <option value="">авто</option>
-        <option value="normal">звич.</option>
-        <option value="bold">жирн.</option>
-      </select>
-      <select class="line-style" title="Стиль">
-        <option value="normal">прямий</option>
-        <option value="italic">курсив</option>
-      </select>
-      <select class="line-font" title="Шрифт цього рядка">
-        <option value="">— основний шрифт —</option>
-        <option value="Arial, sans-serif">Arial</option>
-        <option value="'Arial Narrow', Arial, sans-serif">Arial Narrow</option>
-        <option value="'Arial Black', Arial, sans-serif">Arial Black</option>
-        <option value="'Times New Roman', serif">Times New Roman</option>
-        <option value="Georgia, serif">Georgia</option>
-        <option value="'Courier New', monospace">Courier New</option>
-        <option value="Verdana, sans-serif">Verdana</option>
-        <option value="Tahoma, sans-serif">Tahoma</option>
-        <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
-        <option value="Impact, sans-serif">Impact</option>
-        <option value="'Antonio', Impact, sans-serif">Antonio</option>
-        <option value="'Oswald', Impact, sans-serif">Oswald</option>
-        <option value="'Bebas Neue', Impact, sans-serif">Bebas Neue</option>
-        <option value="'Anton', Impact, sans-serif">Anton</option>
-        <option value="'PT Sans', sans-serif">PT Sans</option>
-        <option value="'PT Serif', serif">PT Serif</option>
-      </select>
-      <button class="line-up" title="Підняти вище">▲</button>
-      <button class="line-down" title="Опустити нижче">▼</button>
-      <button class="line-remove" title="Видалити рядок">✕</button>
-    </div>
-  </div>
-</template>
-
-<script src="app.js"></script>
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+  (function () {
+    var els = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("in"); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(function (e) { io.observe(e); });
+  })();
+</script>
 </body>
 </html>
