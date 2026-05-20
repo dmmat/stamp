@@ -15,4 +15,12 @@
       <image:caption>Веб-генератор печаток за стандартами України: SVG, PNG, DXF</image:caption>
     </image:image>
   </url>
+  <url>
+    <loc>https://dmat.pp.ua/stamp/about.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://dmat.pp.ua/stamp/about.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dmat.pp.ua/stamp/about.html" />
+  </url>
 </urlset>
