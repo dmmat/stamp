@@ -28,12 +28,19 @@ git clone https://github.com/dmmat/stamp.git
 cd stamp
 
 # 2. (Перший раз) завантаж локальні шрифти, потрібні для конвертації у криві
-./setup-fonts.sh
+cd app && ./setup-fonts.sh && cd ..
 
 # 3. Підніми статичний сервер
 python3 -m http.server 8000
-# або просто відкрий index.html у браузері
+# лендінг:    http://localhost:8000/
+# генератор:  http://localhost:8000/app/
 ```
+
+## Структура
+
+- `index.html` + `landing.css` — лендінг (презентація, опис, FAQ, SEO)
+- `app/` — сам генератор (`index.html`, `app.js`, `style.css`, `presets.json`, `fonts/`)
+- `favicon.svg`, `og-image.png`, `robots.txt`, `sitemap.xml`, `llms.txt`, `manifest.webmanifest` — спільні SEO-ассети в корені
 
 ## Власні пресети
 

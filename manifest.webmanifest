@@ -4,7 +4,7 @@
   "description": "Онлайн-генератор печаток і штампів за українськими стандартами. Експорт у SVG, PNG, DXF.",
   "lang": "uk",
   "dir": "ltr",
-  "start_url": "./",
+  "start_url": "app/",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
