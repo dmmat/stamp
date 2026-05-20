@@ -648,3 +648,36 @@ footer {
   color: #666;
 }
 .seo-meta a { color: #1a4fa3; }
+
+/* ===== ABOUT PAGE ===== */
+body.about-page {
+  height: auto;
+  min-height: 100vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+.about-page header { position: sticky; top: 0; z-index: 10; }
+.about-page .menu-trigger {
+  text-decoration: none;
+  display: inline-block;
+}
+.about-main {
+  flex: 1 1 auto;
+  display: block;
+  overflow: visible;
+}
+.about-main .seo-content { border-top: none; }
+.cta-btn {
+  display: inline-block;
+  background: #1a4fa3;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 12px 22px;
+  border-radius: 8px;
+  margin: 4px 0;
+  transition: background .15s ease;
+}
+.cta-btn:hover { background: #143d80; }
