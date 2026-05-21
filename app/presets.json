@@ -66,5 +66,60 @@
       { "text": "№ 1", "size": 2.0, "weight": "" }
     ],
     "showStars": true, "showTrident": false
+  },
+
+  "rect-doctor": {
+    "label": "🩺 Лікар — особистий штамп",
+    "shape": "rect", "size": "60x25", "color": "#1a4fa3",
+    "outerWidth": 0.8, "innerRingStyle": "simple", "innerWidth": 0.4,
+    "lines": [
+      { "text": "Лікар-терапевт", "size": 2.0, "weight": "" },
+      { "text": "ІВАНЕНКО І. І.", "size": 2.4, "weight": "bold" },
+      { "text": "Посв. № 12345", "size": 1.8, "weight": "" }
+    ]
+  },
+
+  "rect-corner": {
+    "label": "🏢 Кутовий штамп (реквізити)",
+    "shape": "rect", "size": "70x30", "color": "#1a4fa3",
+    "outerWidth": 0.8, "innerRingStyle": "none", "innerWidth": 0.4,
+    "lines": [
+      { "text": "ТОВ «ПРИКЛАД»", "size": 2.4, "weight": "bold" },
+      { "text": "ЄДРПОУ 12345678", "size": 1.9, "weight": "" },
+      { "text": "м. Київ, вул. Хрещатик, 1", "size": 1.7, "weight": "" },
+      { "text": "тел. (044) 000-00-00", "size": 1.7, "weight": "" },
+      { "text": "№ ____ від «__» ____ 20__ р.", "size": 1.7, "weight": "" }
+    ]
+  },
+
+  "rect-paid": {
+    "label": "💳 «Сплачено» — бухгалтерський",
+    "shape": "rect", "size": "50x20", "color": "#1a4fa3",
+    "outerWidth": 1.0, "innerRingStyle": "simple", "innerWidth": 0.4,
+    "lines": [
+      { "text": "СПЛАЧЕНО", "size": 3.2, "weight": "bold" },
+      { "text": "«__» ________ 20__ р.", "size": 1.7, "weight": "" }
+    ]
+  },
+
+  "rect-copy": {
+    "label": "📑 «Копія вірна»",
+    "shape": "rect", "size": "60x25", "color": "#1a4fa3",
+    "outerWidth": 0.8, "innerRingStyle": "simple", "innerWidth": 0.4,
+    "lines": [
+      { "text": "КОПІЯ ВІРНА", "size": 2.6, "weight": "bold" },
+      { "text": "_______________", "size": 1.8, "weight": "" },
+      { "text": "підпис · дата", "size": 1.5, "weight": "" }
+    ]
+  },
+
+  "rect-incoming": {
+    "label": "📥 «Вх. №» — реєстраційний",
+    "shape": "rect", "size": "60x25", "color": "#1a4fa3",
+    "outerWidth": 0.8, "innerRingStyle": "simple", "innerWidth": 0.4,
+    "lines": [
+      { "text": "ВХ. № __________", "size": 2.2, "weight": "bold" },
+      { "text": "«__» ________ 20__ р.", "size": 1.7, "weight": "" }
+    ]
   }
 }
